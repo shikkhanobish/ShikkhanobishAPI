@@ -14,6 +14,8 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public string description { get; set; }
         public string date { get; set; }
         public int studentID { get; set; }
+        public int tuitionLogStatus { get; set; }
+        public int pendingTeacherID { get; set; }
         public string Response { get; set; }
     }
 }
