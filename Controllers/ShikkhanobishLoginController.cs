@@ -3300,6 +3300,8 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@date", obj.date);
                 cmd.Parameters.AddWithValue("@tuitionLogStatus", obj.tuitionLogStatus);
                 cmd.Parameters.AddWithValue("@pendingTeacherID", obj.pendingTeacherID);
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@chapterName", obj.chapterName);
 
 
                 conn.Open();
@@ -3349,6 +3351,8 @@ forthChoiceName: 'Chapter 1'
                     objAdd.studentID = Convert.ToInt32(reader["studentID"]);
                     objAdd.tuitionLogStatus = Convert.ToInt32(reader["tuitionLogStatus"]);
                     objAdd.pendingTeacherID = Convert.ToInt32(reader["pendingTeacherID"]);
+                    objAdd.chapterName = reader["chapterName"].ToString();
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.Response = "ok";
 
                     objRList.Add(objAdd);
