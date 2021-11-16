@@ -4601,5 +4601,300 @@ forthChoiceName: 'Chapter 1'
 
 
         #endregion
+
+        #region TuitionRequestCount
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setTuitionRequestCount(TuitionRequestCount obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setTuitionRequestCount", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@tuitionID", obj.tuitionID);
+                cmd.Parameters.AddWithValue("@teacherID", obj.teacherID);
+                
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<TuitionRequestCount> getTuitionRequestCount()
+        {
+            List<TuitionRequestCount> objRList = new List<TuitionRequestCount>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getTuitionRequestCount", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    TuitionRequestCount objAdd = new TuitionRequestCount();
+                    objAdd.teacherID = Convert.ToInt32(reader["teacherID"]);
+                    objAdd.tuitionID = reader["tuitionID"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                TuitionRequestCount objAdd = new TuitionRequestCount();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public TuitionRequestCount getTuitionRequestWithtuitionID(TuitionRequestCount obj)
+        {
+            TuitionRequestCount objR = new TuitionRequestCount();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getTuitionRequestWithtuitionID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@tuitionID", obj.tuitionID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.tuitionID = reader["tuitionID"].ToString();
+                    objR.teacherID = Convert.ToInt32(reader["teacherID"]);
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public TuitionRequestCount getTuitionRequestWithTeacherID(TuitionRequestCount obj)
+        {
+            TuitionRequestCount objR = new TuitionRequestCount();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getTuitionRequestWithTeacherID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@teacherID", obj.teacherID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.tuitionID = reader["tuitionID"].ToString();
+                    objR.teacherID = Convert.ToInt32(reader["teacherID"]);
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+        #endregion
+
+        #region TeacherReview
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setTeacherReview(TeacherReview obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setTeacherReview", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@reviewID", obj.reviewID);
+                cmd.Parameters.AddWithValue("@teacherID", obj.teacherID);
+                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+                cmd.Parameters.AddWithValue("@review", obj.review);
+                cmd.Parameters.AddWithValue("@tuitionID", obj.tuitionID);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setTeacherReviewWithID(TeacherReview obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setTeacherReviewWithID", conn);
+                cmd.Parameters.AddWithValue("@reviewID", obj.reviewID);
+                cmd.Parameters.AddWithValue("@teacherID", obj.teacherID);
+                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+                cmd.Parameters.AddWithValue("@review", obj.review);
+                cmd.Parameters.AddWithValue("@tuitionID", obj.tuitionID);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                    if (i != 0)
+                    {
+                        response.Massage = "Succesfull!";
+                        response.Status = 0;
+                    }
+                    else
+                    {
+                        response.Massage = "Unsuccesfull!";
+                        response.Status = 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<TeacherReview> getTeacherReview()
+        {
+            List<TeacherReview> objRList = new List<TeacherReview>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getTeacherReview", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    TeacherReview objAdd = new TeacherReview();
+                    objAdd.reviewID = reader["reviewID"].ToString();
+                    objAdd.teacherID = Convert.ToInt32(reader["teacherID"]);
+                    objAdd.studentID = Convert.ToInt32(reader["studentID"]);
+                    objAdd.review = reader["review"].ToString();
+                    objAdd.tuitionID = reader["tuitionID"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                TeacherReview objAdd = new TeacherReview();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public TeacherReview getTeacherReviewWithID(TeacherReview obj)
+        {
+            TeacherReview objR = new TeacherReview();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getTeacherReviewWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@reviewID", obj.reviewID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.reviewID = reader["reviewID"].ToString();
+                    objR.teacherID = Convert.ToInt32(reader["teacherID"]);
+                    objR.studentID = Convert.ToInt32(reader["studentID"]);
+                    objR.review = reader["review"].ToString();
+                    objR.tuitionID = reader["tuitionID"].ToString();
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<TeacherReview> getTeacherReviewWithTeacherID(TeacherReview obj)
+        {
+            List<TeacherReview> objRList = new List<TeacherReview>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getTeacherReview", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@teacherID", obj.teacherID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    TeacherReview objAdd = new TeacherReview();
+                    objAdd.reviewID = reader["reviewID"].ToString();
+                    objAdd.teacherID = Convert.ToInt32(reader["teacherID"]);
+                    objAdd.studentID = Convert.ToInt32(reader["studentID"]);
+                    objAdd.review = reader["review"].ToString();
+                    objAdd.tuitionID = reader["tuitionID"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                TeacherReview objAdd = new TeacherReview();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        
+        }
+
+        #endregion
     }
 }
