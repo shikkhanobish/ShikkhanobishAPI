@@ -4867,7 +4867,7 @@ forthChoiceName: 'Chapter 1'
             try
             {
                 Connection();
-                SqlCommand cmd = new SqlCommand("getTeacherReview", conn);
+                SqlCommand cmd = new SqlCommand("getTeacherReviewWithTeacherID", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@teacherID", obj.teacherID);
                 conn.Open();
@@ -4895,6 +4895,128 @@ forthChoiceName: 'Chapter 1'
         
         }
 
+        #endregion
+
+
+        #region UserTImelineTag
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setUserTimelineTag(UserTimelineTag obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setUserTimelineTag", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userID", obj.userID);
+                cmd.Parameters.AddWithValue("@tagID", obj.tagID);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<UserTimelineTag> getUserTimelineTag()
+        {
+            List<UserTimelineTag> objRList = new List<UserTimelineTag>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getUserTimelineTag", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    UserTimelineTag objAdd = new UserTimelineTag();
+                    objAdd.userID = Convert.ToInt32(reader["userID"]);
+                    objAdd.tagID = Convert.ToInt32(reader["tagID"]);
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                UserTimelineTag objAdd = new UserTimelineTag();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public UserTimelineTag getUserTimelineTagWithUserID(UserTimelineTag obj)
+        {
+            UserTimelineTag objR = new UserTimelineTag();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getUserTimelineTagWithUserID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userID", obj.userID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.userID = Convert.ToInt32(reader["userID"]);
+                    objR.tagID = Convert.ToInt32(reader["tagID"]);
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public UserTimelineTag getUserTimelineTagWithTagID(UserTimelineTag obj)
+        {
+            UserTimelineTag objR = new UserTimelineTag();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getUserTimelineTagWithTagID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@tagID", obj.tagID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.userID = Convert.ToInt32(reader["userID"]);
+                    objR.tagID = Convert.ToInt32(reader["tagID"]);
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
         #endregion
     }
 }

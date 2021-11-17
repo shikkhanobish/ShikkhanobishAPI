@@ -311,6 +311,7 @@
     <Compile Include="Models\Shikkhanobish\TuiTionLog.cs" />
     <Compile Include="Models\Shikkhanobish\TuitionRequestCount.cs" />
     <Compile Include="Models\Shikkhanobish\UpdateTeacher.cs" />
+    <Compile Include="Models\Shikkhanobish\UserTimelineTag.cs" />
     <Compile Include="Models\TransactionModel.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\Shikkhanobish\ChangeTeacherInfo.cs" />
