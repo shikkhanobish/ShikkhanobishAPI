@@ -4898,7 +4898,7 @@ forthChoiceName: 'Chapter 1'
         #endregion
 
 
-        #region UserTImelineTag
+        #region UserTimelineTag
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Response setUserTimelineTag(UserTimelineTag obj)
         {
@@ -4964,9 +4964,9 @@ forthChoiceName: 'Chapter 1'
         }
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
-        public UserTimelineTag getUserTimelineTagWithUserID(UserTimelineTag obj)
+        public List<UserTimelineTag> getUserTimelineTagWithUserID(UserTimelineTag obj)
         {
-            UserTimelineTag objR = new UserTimelineTag();
+            List<UserTimelineTag> objRList = new List<UserTimelineTag>();
             try
             {
                 Connection();
@@ -4977,20 +4977,26 @@ forthChoiceName: 'Chapter 1'
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    objR.userID = Convert.ToInt32(reader["userID"]);
-                    objR.tagID = Convert.ToInt32(reader["tagID"]);
+                    UserTimelineTag objAdd = new UserTimelineTag();
+         
+                    objAdd.userID = Convert.ToInt32(reader["userID"]);
+                    objAdd.tagID = Convert.ToInt32(reader["tagID"]);
 
+                    objRList.Add(objAdd);
                 }
                 conn.Close();
             }
             catch (Exception ex)
             {
-                objR.Response = ex.Message;
+                UserTimelineTag objAdd = new UserTimelineTag();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
             }
-            return objR;
+            return objRList;
+
         }
 
-
+        
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public UserTimelineTag getUserTimelineTagWithTagID(UserTimelineTag obj)
         {
@@ -5017,6 +5023,74 @@ forthChoiceName: 'Chapter 1'
             }
             return objR;
         }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response deleteUserTimelineTagWithUserID(UserTimelineTag obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteUserTimelineTagWithUserID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userID", obj.userID);
+                cmd.Parameters.AddWithValue("@tagID", obj.tagID);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response deleteUserTimelineTagWithTagID(UserTimelineTag obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteUserTimelineTagWithTagID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userID", obj.userID);
+                cmd.Parameters.AddWithValue("@tagID", obj.tagID);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
         #endregion
     }
 }
