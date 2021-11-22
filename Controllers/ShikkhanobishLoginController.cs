@@ -5091,6 +5091,39 @@ forthChoiceName: 'Chapter 1'
             return response;
         }
 
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response deleteUserTimelineTagWithBothID(UserTimelineTag obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteUserTimelineTagWithBothID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userID", obj.userID);
+                cmd.Parameters.AddWithValue("@tagID", obj.tagID);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
         #endregion
     }
 }
