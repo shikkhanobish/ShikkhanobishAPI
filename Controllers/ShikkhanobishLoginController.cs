@@ -4125,7 +4125,7 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@answerID", obj.answerID);
                 cmd.Parameters.AddWithValue("@name", obj.name);
                 cmd.Parameters.AddWithValue("@answer", obj.answer);
-                cmd.Parameters.AddWithValue("@answerDate", obj.answerDate);
+                cmd.Parameters.AddWithValue("@answerDate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
                 cmd.Parameters.AddWithValue("@userID", obj.userID);
                 cmd.Parameters.AddWithValue("@userType", obj.userType);
                 cmd.Parameters.AddWithValue("@imgSrc", obj.imgSrc);
@@ -4160,7 +4160,7 @@ forthChoiceName: 'Chapter 1'
             try
             {
                 Connection();
-                SqlCommand cmd = new SqlCommand("setPostWithID", conn);
+                SqlCommand cmd = new SqlCommand("setAnswerWithID", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@answerID", obj.answerID);
                 cmd.Parameters.AddWithValue("@name", obj.name);
