@@ -292,6 +292,8 @@
     <Compile Include="Models\Shikkhanobish\AppVersion.cs" />
     <Compile Include="Models\Shikkhanobish\CallBackPayment.cs" />
     <Compile Include="Models\Shikkhanobish\ClassChoice.cs" />
+    <Compile Include="Models\Shikkhanobish\Notification.cs" />
+    <Compile Include="Models\Shikkhanobish\NotificationType.cs" />
     <Compile Include="Models\Shikkhanobish\pendingRatting.cs" />
     <Compile Include="Models\Shikkhanobish\Post.cs" />
     <Compile Include="Models\Shikkhanobish\PromotionalImage.cs" />

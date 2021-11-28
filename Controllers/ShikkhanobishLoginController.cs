@@ -4304,6 +4304,40 @@ forthChoiceName: 'Chapter 1'
         }
 
 
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response deleteAnswerWithID(Answer obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteAnswerWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@answerID", obj.answerID);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+
         #endregion
 
         #region Class Choice
@@ -5125,5 +5159,150 @@ forthChoiceName: 'Chapter 1'
             return response;
         }
         #endregion
+
+
+        #region NotificationType
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<NotificationType> getNotificationType()
+        {
+            List<NotificationType> objRList = new List<NotificationType>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getNotificationType", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    NotificationType objAdd = new NotificationType();
+                    objAdd.ntID = Convert.ToInt32(reader["ntID"]);
+                    objAdd.ntIcon = reader["ntIcon"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                NotificationType objAdd = new NotificationType();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+        #endregion
+
+
+        #region Notification
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response setNotification(Notification obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setNotification", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@notificationID", obj.notificationID);
+                cmd.Parameters.AddWithValue("@userId", obj.userId);
+                cmd.Parameters.AddWithValue("@userType", obj.userType);
+                cmd.Parameters.AddWithValue("@notificationType", obj.notificationType);
+                cmd.Parameters.AddWithValue("@description", obj.description);
+                cmd.Parameters.AddWithValue("@refID", obj.refID);
+                cmd.Parameters.AddWithValue("@notificationDate", obj.notificationDate);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Notification getNotificationWithUserIDAndUserType(Notification obj)
+        {
+            Notification objR = new Notification();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getNotificationWithUserIDAndUserType", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userId", obj.userId);
+                cmd.Parameters.AddWithValue("@userType", obj.userType);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.notificationID = reader["notificationID"].ToString();
+                    objR.userId = Convert.ToInt32(reader["studentReportID"]);
+                    objR.userType = Convert.ToInt32(reader["reportType"]);
+                    objR.description = reader["refID"].ToString();
+                    objR.refID = reader["refID"].ToString();
+                    objR.notificationDate = reader["notificationDate"].ToString();
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response deleteNotification(Notification obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteNotification", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@notificationID", obj.notificationID);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        #endregion
+
     }
 }
