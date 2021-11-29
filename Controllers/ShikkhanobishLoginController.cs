@@ -3770,7 +3770,7 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@postID", obj.postID);
                 cmd.Parameters.AddWithValue("@name", obj.name);
                 cmd.Parameters.AddWithValue("@post", obj.post);
-                cmd.Parameters.AddWithValue("@postDate", obj.postDate);
+                cmd.Parameters.AddWithValue("@postDate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
                 cmd.Parameters.AddWithValue("@userID", obj.userID);
                 cmd.Parameters.AddWithValue("@userType", obj.userType);
                 cmd.Parameters.AddWithValue("@imgSrc", obj.imgSrc);
