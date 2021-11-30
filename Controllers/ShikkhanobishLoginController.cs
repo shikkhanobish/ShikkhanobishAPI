@@ -3770,7 +3770,7 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@postID", obj.postID);
                 cmd.Parameters.AddWithValue("@name", obj.name);
                 cmd.Parameters.AddWithValue("@post", obj.post);
-                cmd.Parameters.AddWithValue("@postDate", obj.postDate);
+                cmd.Parameters.AddWithValue("@postDate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
                 cmd.Parameters.AddWithValue("@userID", obj.userID);
                 cmd.Parameters.AddWithValue("@userType", obj.userType);
                 cmd.Parameters.AddWithValue("@imgSrc", obj.imgSrc);
@@ -4125,7 +4125,7 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@answerID", obj.answerID);
                 cmd.Parameters.AddWithValue("@name", obj.name);
                 cmd.Parameters.AddWithValue("@answer", obj.answer);
-                cmd.Parameters.AddWithValue("@answerDate", obj.answerDate);
+                cmd.Parameters.AddWithValue("@answerDate", DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss"));
                 cmd.Parameters.AddWithValue("@userID", obj.userID);
                 cmd.Parameters.AddWithValue("@userType", obj.userType);
                 cmd.Parameters.AddWithValue("@imgSrc", obj.imgSrc);
@@ -4160,7 +4160,7 @@ forthChoiceName: 'Chapter 1'
             try
             {
                 Connection();
-                SqlCommand cmd = new SqlCommand("setPostWithID", conn);
+                SqlCommand cmd = new SqlCommand("setAnswerWithID", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@answerID", obj.answerID);
                 cmd.Parameters.AddWithValue("@name", obj.name);
@@ -4301,6 +4301,40 @@ forthChoiceName: 'Chapter 1'
                 objR.Response = ex.Message;
             }
             return objR;
+        }
+
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response deleteAnswerWithID(Answer obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteAnswerWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@answerID", obj.answerID);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
         }
 
 
@@ -4898,7 +4932,7 @@ forthChoiceName: 'Chapter 1'
         #endregion
 
 
-        #region UserTImelineTag
+        #region UserTimelineTag
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Response setUserTimelineTag(UserTimelineTag obj)
         {
@@ -4964,9 +4998,9 @@ forthChoiceName: 'Chapter 1'
         }
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
-        public UserTimelineTag getUserTimelineTagWithUserID(UserTimelineTag obj)
+        public List<UserTimelineTag> getUserTimelineTagWithUserID(UserTimelineTag obj)
         {
-            UserTimelineTag objR = new UserTimelineTag();
+            List<UserTimelineTag> objRList = new List<UserTimelineTag>();
             try
             {
                 Connection();
@@ -4977,20 +5011,26 @@ forthChoiceName: 'Chapter 1'
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    objR.userID = Convert.ToInt32(reader["userID"]);
-                    objR.tagID = Convert.ToInt32(reader["tagID"]);
+                    UserTimelineTag objAdd = new UserTimelineTag();
+         
+                    objAdd.userID = Convert.ToInt32(reader["userID"]);
+                    objAdd.tagID = Convert.ToInt32(reader["tagID"]);
 
+                    objRList.Add(objAdd);
                 }
                 conn.Close();
             }
             catch (Exception ex)
             {
-                objR.Response = ex.Message;
+                UserTimelineTag objAdd = new UserTimelineTag();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
             }
-            return objR;
+            return objRList;
+
         }
 
-
+        
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public UserTimelineTag getUserTimelineTagWithTagID(UserTimelineTag obj)
         {
@@ -5017,6 +5057,252 @@ forthChoiceName: 'Chapter 1'
             }
             return objR;
         }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response deleteUserTimelineTagWithUserID(UserTimelineTag obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteUserTimelineTagWithUserID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userID", obj.userID);
+                cmd.Parameters.AddWithValue("@tagID", obj.tagID);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response deleteUserTimelineTagWithTagID(UserTimelineTag obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteUserTimelineTagWithTagID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userID", obj.userID);
+                cmd.Parameters.AddWithValue("@tagID", obj.tagID);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response deleteUserTimelineTagWithBothID(UserTimelineTag obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteUserTimelineTagWithBothID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userID", obj.userID);
+                cmd.Parameters.AddWithValue("@tagID", obj.tagID);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
         #endregion
+
+
+        #region NotificationType
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<NotificationType> getNotificationType()
+        {
+            List<NotificationType> objRList = new List<NotificationType>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getNotificationType", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    NotificationType objAdd = new NotificationType();
+                    objAdd.ntID = Convert.ToInt32(reader["ntID"]);
+                    objAdd.ntIcon = reader["ntIcon"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                NotificationType objAdd = new NotificationType();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+        #endregion
+
+
+        #region Notification
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response setNotification(Notification obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setNotification", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@notificationID", obj.notificationID);
+                cmd.Parameters.AddWithValue("@userId", obj.userId);
+                cmd.Parameters.AddWithValue("@userType", obj.userType);
+                cmd.Parameters.AddWithValue("@notificationType", obj.notificationType);
+                cmd.Parameters.AddWithValue("@description", obj.description);
+                cmd.Parameters.AddWithValue("@refID", obj.refID);
+                cmd.Parameters.AddWithValue("@notificationDate", obj.notificationDate);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Notification getNotificationWithUserIDAndUserType(Notification obj)
+        {
+            Notification objR = new Notification();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getNotificationWithUserIDAndUserType", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userId", obj.userId);
+                cmd.Parameters.AddWithValue("@userType", obj.userType);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.notificationID = reader["notificationID"].ToString();
+                    objR.userId = Convert.ToInt32(reader["studentReportID"]);
+                    objR.userType = Convert.ToInt32(reader["reportType"]);
+                    objR.description = reader["refID"].ToString();
+                    objR.refID = reader["refID"].ToString();
+                    objR.notificationDate = reader["notificationDate"].ToString();
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response deleteNotification(Notification obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteNotification", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@notificationID", obj.notificationID);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        #endregion
+
     }
 }
