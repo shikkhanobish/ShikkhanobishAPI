@@ -298,10 +298,13 @@
     <Compile Include="Models\Shikkhanobish\Post.cs" />
     <Compile Include="Models\Shikkhanobish\PromotionalImage.cs" />
     <Compile Include="Models\Shikkhanobish\PromotionalMassage.cs" />
+    <Compile Include="Models\Shikkhanobish\PushNotificationToken.cs" />
     <Compile Include="Models\Shikkhanobish\Question.cs" />
     <Compile Include="Models\Shikkhanobish\ReferralTable.cs" />
     <Compile Include="Models\Shikkhanobish\requestPayment.cs" />
     <Compile Include="Models\Shikkhanobish\searchForActiveTeacher.cs" />
+    <Compile Include="Models\Shikkhanobish\StudentEvaluation.cs" />
+    <Compile Include="Models\Shikkhanobish\StudentMCQAns.cs" />
     <Compile Include="Models\Shikkhanobish\StudentReport.cs" />
     <Compile Include="Models\Shikkhanobish\Tag.cs" />
     <Compile Include="Models\Shikkhanobish\TagStudentConnector.cs" />
