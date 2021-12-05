@@ -3329,6 +3329,46 @@ forthChoiceName: 'Chapter 1'
             return response;
         }
         [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<TuiTionLog> getTuiTionLogWithID(TuiTionLog obj)
+        {
+            List<TuiTionLog> objRList = new List<TuiTionLog>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getTuiTionLogWithID", conn);
+                cmd.Parameters.AddWithValue("@tuitionLogID", obj.tuitionLogID);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    TuiTionLog objAdd = new TuiTionLog();
+                    objAdd.tuitionLogID = reader["tuitionLogID"].ToString();
+                    objAdd.subjectname = reader["subjectname"].ToString();
+                    objAdd.studentName = reader["studentName"].ToString();
+                    objAdd.date = reader["date"].ToString();
+                    objAdd.subjectID = Convert.ToInt32(reader["subjectID"]);
+                    objAdd.description = reader["description"].ToString();
+                    objAdd.studentID = Convert.ToInt32(reader["studentID"]);
+                    objAdd.tuitionLogStatus = Convert.ToInt32(reader["tuitionLogStatus"]);
+                    objAdd.pendingTeacherID = Convert.ToInt32(reader["pendingTeacherID"]);
+                    objAdd.chapterName = reader["chapterName"].ToString();
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.Response = "ok";
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                TuiTionLog objAdd = new TuiTionLog();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
         public List<TuiTionLog> getTuiTionLogNeW()
         {
             List<TuiTionLog> objRList = new List<TuiTionLog>();
