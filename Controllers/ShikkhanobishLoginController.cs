@@ -3756,7 +3756,6 @@ forthChoiceName: 'Chapter 1'
 
         #endregion
 
-
         #region Post
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Response setPost(Post obj)
@@ -3983,8 +3982,6 @@ forthChoiceName: 'Chapter 1'
 
         #endregion
 
-
-
         #region TeacherReputation
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Response setTeacherReputation(TeacherReputation obj)
@@ -4110,7 +4107,6 @@ forthChoiceName: 'Chapter 1'
 
 
         #endregion
-
 
         #region Answer
         [System.Web.Http.AcceptVerbs("GET", "POST")]
@@ -4931,7 +4927,6 @@ forthChoiceName: 'Chapter 1'
 
         #endregion
 
-
         #region UserTimelineTag
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Response setUserTimelineTag(UserTimelineTag obj)
@@ -5160,7 +5155,6 @@ forthChoiceName: 'Chapter 1'
         }
         #endregion
 
-
         #region NotificationType
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
@@ -5194,7 +5188,6 @@ forthChoiceName: 'Chapter 1'
         }
         #endregion
 
-
         #region Notification
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
@@ -5212,7 +5205,10 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@userType", obj.userType);
                 cmd.Parameters.AddWithValue("@notificationType", obj.notificationType);
                 cmd.Parameters.AddWithValue("@description", obj.description);
-                cmd.Parameters.AddWithValue("@refID", obj.refID);
+                cmd.Parameters.AddWithValue("@refIDOne", obj.refIDOne);
+                cmd.Parameters.AddWithValue("@refIDTwo", obj.refIDTwo);
+                cmd.Parameters.AddWithValue("@refIDThree", obj.refIDThree);
+                cmd.Parameters.AddWithValue("@refIDFour", obj.refIDFour);
                 cmd.Parameters.AddWithValue("@notificationDate", obj.notificationDate);
 
 
@@ -5236,6 +5232,85 @@ forthChoiceName: 'Chapter 1'
             }
             return response;
         }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response setNotificationWithID(Notification obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setNotificationWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@notificationID", obj.notificationID);
+                cmd.Parameters.AddWithValue("@userId", obj.userId);
+                cmd.Parameters.AddWithValue("@userType", obj.userType);
+                cmd.Parameters.AddWithValue("@notificationType", obj.notificationType);
+                cmd.Parameters.AddWithValue("@description", obj.description);
+                cmd.Parameters.AddWithValue("@refIDOne", obj.refIDOne);
+                cmd.Parameters.AddWithValue("@refIDTwo", obj.refIDTwo);
+                cmd.Parameters.AddWithValue("@refIDThree", obj.refIDThree);
+                cmd.Parameters.AddWithValue("@refIDFour", obj.refIDFour);
+                cmd.Parameters.AddWithValue("@notificationDate", obj.notificationDate);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<Notification> getNotification()
+        {
+            List<Notification> objRList = new List<Notification>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getNotification", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Notification objAdd = new Notification();
+                    objAdd.notificationID = reader["notificationID"].ToString();
+                    objAdd.userId = Convert.ToInt32(reader["userId"]);
+                    objAdd.userType = Convert.ToInt32(reader["userType"]);
+                    objAdd.notificationType = Convert.ToInt32(reader["notificationType"]);
+                    objAdd.description = reader["description"].ToString();
+                    objAdd.refIDOne = reader["refIDOne"].ToString();
+                    objAdd.refIDTwo = reader["refIDTwo"].ToString();
+                    objAdd.refIDThree = reader["refIDThree"].ToString();
+                    objAdd.refIDFour = reader["refIDFour"].ToString();
+                    objAdd.notificationDate = reader["notificationDate"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                Notification objAdd = new Notification();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Notification getNotificationWithUserIDAndUserType(Notification obj)
@@ -5253,10 +5328,13 @@ forthChoiceName: 'Chapter 1'
                 while (reader.Read())
                 {
                     objR.notificationID = reader["notificationID"].ToString();
-                    objR.userId = Convert.ToInt32(reader["studentReportID"]);
-                    objR.userType = Convert.ToInt32(reader["reportType"]);
-                    objR.description = reader["refID"].ToString();
-                    objR.refID = reader["refID"].ToString();
+                    objR.userId = Convert.ToInt32(reader["userId"]);
+                    objR.userType = Convert.ToInt32(reader["userType"]);
+                    objR.description = reader["description"].ToString();
+                    objR.refIDOne= reader["refIDOne"].ToString();
+                    objR.refIDTwo = reader["refIDTwo"].ToString();
+                    objR.refIDThree = reader["refIDThree"].ToString();
+                    objR.refIDFour = reader["refIDFour"].ToString();
                     objR.notificationDate = reader["notificationDate"].ToString();
 
                 }
@@ -5606,8 +5684,6 @@ forthChoiceName: 'Chapter 1'
             return objR;
         }
         #endregion
-
-
 
         #region StudentMCQAns
 
