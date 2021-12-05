@@ -3756,7 +3756,6 @@ forthChoiceName: 'Chapter 1'
 
         #endregion
 
-
         #region Post
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Response setPost(Post obj)
@@ -3983,8 +3982,6 @@ forthChoiceName: 'Chapter 1'
 
         #endregion
 
-
-
         #region TeacherReputation
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Response setTeacherReputation(TeacherReputation obj)
@@ -4110,7 +4107,6 @@ forthChoiceName: 'Chapter 1'
 
 
         #endregion
-
 
         #region Answer
         [System.Web.Http.AcceptVerbs("GET", "POST")]
@@ -4931,7 +4927,6 @@ forthChoiceName: 'Chapter 1'
 
         #endregion
 
-
         #region UserTimelineTag
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Response setUserTimelineTag(UserTimelineTag obj)
@@ -5160,7 +5155,6 @@ forthChoiceName: 'Chapter 1'
         }
         #endregion
 
-
         #region NotificationType
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
@@ -5194,7 +5188,6 @@ forthChoiceName: 'Chapter 1'
         }
         #endregion
 
-
         #region Notification
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
@@ -5212,7 +5205,10 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@userType", obj.userType);
                 cmd.Parameters.AddWithValue("@notificationType", obj.notificationType);
                 cmd.Parameters.AddWithValue("@description", obj.description);
-                cmd.Parameters.AddWithValue("@refID", obj.refID);
+                cmd.Parameters.AddWithValue("@refIDOne", obj.refIDOne);
+                cmd.Parameters.AddWithValue("@refIDTwo", obj.refIDTwo);
+                cmd.Parameters.AddWithValue("@refIDThree", obj.refIDThree);
+                cmd.Parameters.AddWithValue("@refIDFour", obj.refIDFour);
                 cmd.Parameters.AddWithValue("@notificationDate", obj.notificationDate);
 
 
@@ -5236,6 +5232,85 @@ forthChoiceName: 'Chapter 1'
             }
             return response;
         }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response setNotificationWithID(Notification obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setNotificationWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@notificationID", obj.notificationID);
+                cmd.Parameters.AddWithValue("@userId", obj.userId);
+                cmd.Parameters.AddWithValue("@userType", obj.userType);
+                cmd.Parameters.AddWithValue("@notificationType", obj.notificationType);
+                cmd.Parameters.AddWithValue("@description", obj.description);
+                cmd.Parameters.AddWithValue("@refIDOne", obj.refIDOne);
+                cmd.Parameters.AddWithValue("@refIDTwo", obj.refIDTwo);
+                cmd.Parameters.AddWithValue("@refIDThree", obj.refIDThree);
+                cmd.Parameters.AddWithValue("@refIDFour", obj.refIDFour);
+                cmd.Parameters.AddWithValue("@notificationDate", obj.notificationDate);
+
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<Notification> getNotification()
+        {
+            List<Notification> objRList = new List<Notification>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getNotification", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Notification objAdd = new Notification();
+                    objAdd.notificationID = reader["notificationID"].ToString();
+                    objAdd.userId = Convert.ToInt32(reader["userId"]);
+                    objAdd.userType = Convert.ToInt32(reader["userType"]);
+                    objAdd.notificationType = Convert.ToInt32(reader["notificationType"]);
+                    objAdd.description = reader["description"].ToString();
+                    objAdd.refIDOne = reader["refIDOne"].ToString();
+                    objAdd.refIDTwo = reader["refIDTwo"].ToString();
+                    objAdd.refIDThree = reader["refIDThree"].ToString();
+                    objAdd.refIDFour = reader["refIDFour"].ToString();
+                    objAdd.notificationDate = reader["notificationDate"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                Notification objAdd = new Notification();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Notification getNotificationWithUserIDAndUserType(Notification obj)
@@ -5253,10 +5328,13 @@ forthChoiceName: 'Chapter 1'
                 while (reader.Read())
                 {
                     objR.notificationID = reader["notificationID"].ToString();
-                    objR.userId = Convert.ToInt32(reader["studentReportID"]);
-                    objR.userType = Convert.ToInt32(reader["reportType"]);
-                    objR.description = reader["refID"].ToString();
-                    objR.refID = reader["refID"].ToString();
+                    objR.userId = Convert.ToInt32(reader["userId"]);
+                    objR.userType = Convert.ToInt32(reader["userType"]);
+                    objR.description = reader["description"].ToString();
+                    objR.refIDOne= reader["refIDOne"].ToString();
+                    objR.refIDTwo = reader["refIDTwo"].ToString();
+                    objR.refIDThree = reader["refIDThree"].ToString();
+                    objR.refIDFour = reader["refIDFour"].ToString();
                     objR.notificationDate = reader["notificationDate"].ToString();
 
                 }
@@ -5302,6 +5380,653 @@ forthChoiceName: 'Chapter 1'
             }
             return response;
         }
+        #endregion
+
+        #region Student Evaluation
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setStudentEvaluation(StudentEvaluation obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setStudentEvaluation", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@evaluationID", obj.evaluationID);
+                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+                cmd.Parameters.AddWithValue("@classID", obj.classID);
+                cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@accuracy", obj.accuracy);
+                cmd.Parameters.AddWithValue("@speed", obj.speed);
+                cmd.Parameters.AddWithValue("@numberOFAns", obj.numberOFAns);
+                cmd.Parameters.AddWithValue("@correctAns", obj.correctAns);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setStudentEvaluationWithID(StudentEvaluation obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setStudentEvaluationWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@evaluationID", obj.evaluationID);
+                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+                cmd.Parameters.AddWithValue("@classID", obj.classID);
+                cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@accuracy", obj.accuracy);
+                cmd.Parameters.AddWithValue("@speed", obj.speed);
+                cmd.Parameters.AddWithValue("@numberOFAns", obj.numberOFAns);
+                cmd.Parameters.AddWithValue("@correctAns", obj.correctAns);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                    if (i != 0)
+                    {
+                        response.Massage = "Succesfull!";
+                        response.Status = 0;
+                    }
+                    else
+                    {
+                        response.Massage = "Unsuccesfull!";
+                        response.Status = 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<StudentEvaluation> getStudentEvaluation()
+        {
+            List<StudentEvaluation> objRList = new List<StudentEvaluation>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getStudentEvaluation", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    StudentEvaluation objAdd = new StudentEvaluation();
+                    objAdd.evaluationID = reader["evaluationID"].ToString();
+                    objAdd.studentID = Convert.ToInt32(reader["studentID"]);
+                    objAdd.classID = Convert.ToInt32(reader["classID"]);
+                    objAdd.subjectID = Convert.ToInt32(reader["subjectID"]);
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.accuracy = Convert.ToInt32(reader["accuracy"]);
+                    objAdd.speed = Convert.ToDouble(reader["speed"]);
+                    objAdd.numberOFAns = Convert.ToInt32(reader["numberOFAns"]);
+                    objAdd.correctAns = Convert.ToInt32(reader["correctAns"]);
+
+         
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                StudentEvaluation objAdd = new StudentEvaluation();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public StudentEvaluation getStudentEvaluationWithID(StudentEvaluation obj)
+        {
+            StudentEvaluation objR = new StudentEvaluation();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getStudentEvaluationWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@evaluationID", obj.evaluationID);
+                
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.evaluationID = reader["evaluationID"].ToString();
+                    objR.studentID = Convert.ToInt32(reader["studentID"]);
+                    objR.classID = Convert.ToInt32(reader["classID"]);
+                    objR.subjectID = Convert.ToInt32(reader["subjectID"]);
+                    objR.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objR.accuracy = Convert.ToInt32(reader["accuracy"]);
+                    objR.speed = Convert.ToDouble(reader["speed"]);
+                    objR.numberOFAns = Convert.ToInt32(reader["numberOFAns"]);
+                    objR.correctAns = Convert.ToInt32(reader["correctAns"]);
+
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public StudentEvaluation getStudentEvaluationWithStudentID(StudentEvaluation obj)
+        {
+            StudentEvaluation objR = new StudentEvaluation();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getStudentEvaluationWithStudentID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.evaluationID = reader["evaluationID"].ToString();
+                    objR.studentID = Convert.ToInt32(reader["studentID"]);
+                    objR.classID = Convert.ToInt32(reader["classID"]);
+                    objR.subjectID = Convert.ToInt32(reader["subjectID"]);
+                    objR.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objR.accuracy = Convert.ToInt32(reader["accuracy"]);
+                    objR.speed = Convert.ToDouble(reader["speed"]);
+                    objR.numberOFAns = Convert.ToInt32(reader["numberOFAns"]);
+                    objR.correctAns = Convert.ToInt32(reader["correctAns"]);
+
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public StudentEvaluation getStudentEvaluationWithClassID(StudentEvaluation obj)
+        {
+            StudentEvaluation objR = new StudentEvaluation();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getStudentEvaluationWithClassID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@classID", obj.classID);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.evaluationID = reader["evaluationID"].ToString();
+                    objR.studentID = Convert.ToInt32(reader["studentID"]);
+                    objR.classID = Convert.ToInt32(reader["classID"]);
+                    objR.subjectID = Convert.ToInt32(reader["subjectID"]);
+                    objR.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objR.accuracy = Convert.ToInt32(reader["accuracy"]);
+                    objR.speed = Convert.ToDouble(reader["speed"]);
+                    objR.numberOFAns = Convert.ToInt32(reader["numberOFAns"]);
+                    objR.correctAns = Convert.ToInt32(reader["correctAns"]);
+
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public StudentEvaluation getStudentEvaluationWithSubjectID(StudentEvaluation obj)
+        {
+            StudentEvaluation objR = new StudentEvaluation();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getStudentEvaluationWithSubjectID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.evaluationID = reader["evaluationID"].ToString();
+                    objR.studentID = Convert.ToInt32(reader["studentID"]);
+                    objR.classID = Convert.ToInt32(reader["classID"]);
+                    objR.subjectID = Convert.ToInt32(reader["subjectID"]);
+                    objR.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objR.accuracy = Convert.ToInt32(reader["accuracy"]);
+                    objR.speed = Convert.ToDouble(reader["speed"]);
+                    objR.numberOFAns = Convert.ToInt32(reader["numberOFAns"]);
+                    objR.correctAns = Convert.ToInt32(reader["correctAns"]);
+
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public StudentEvaluation getStudentEvaluationWithChapterID(StudentEvaluation obj)
+        {
+            StudentEvaluation objR = new StudentEvaluation();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getStudentEvaluationWithChapterID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.evaluationID = reader["evaluationID"].ToString();
+                    objR.studentID = Convert.ToInt32(reader["studentID"]);
+                    objR.classID = Convert.ToInt32(reader["classID"]);
+                    objR.subjectID = Convert.ToInt32(reader["subjectID"]);
+                    objR.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objR.accuracy = Convert.ToInt32(reader["accuracy"]);
+                    objR.speed = Convert.ToDouble(reader["speed"]);
+                    objR.numberOFAns = Convert.ToInt32(reader["numberOFAns"]);
+                    objR.correctAns = Convert.ToInt32(reader["correctAns"]);
+
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+        #endregion
+
+        #region StudentMCQAns
+
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setStudentMCQAns(StudentMCQAns obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setStudentMCQAns", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@sMCQAnsID", obj.sMCQAnsID);
+                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+                cmd.Parameters.AddWithValue("@questionID", obj.questionID);
+                cmd.Parameters.AddWithValue("@isRight", obj.isRight);
+                cmd.Parameters.AddWithValue("@ansDate", obj.ansDate);
+        
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setStudentMCQAnsWithID(StudentMCQAns obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setStudentMCQAnsWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@sMCQAnsID", obj.sMCQAnsID);
+                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+                cmd.Parameters.AddWithValue("@questionID", obj.questionID);
+                cmd.Parameters.AddWithValue("@isRight", obj.isRight);
+                cmd.Parameters.AddWithValue("@ansDate", obj.ansDate);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                    if (i != 0)
+                    {
+                        response.Massage = "Succesfull!";
+                        response.Status = 0;
+                    }
+                    else
+                    {
+                        response.Massage = "Unsuccesfull!";
+                        response.Status = 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<StudentMCQAns> getStudentMCQAns()
+        {
+            List<StudentMCQAns> objRList = new List<StudentMCQAns>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getStudentMCQAns", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    StudentMCQAns objAdd = new StudentMCQAns();
+                    objAdd.sMCQAnsID = reader["sMCQAnsID"].ToString();
+                    objAdd.studentID = Convert.ToInt32(reader["studentID"]);
+                    objAdd.questionID = reader["questionID"].ToString();
+                    objAdd.isRight = Convert.ToInt32(reader["isRight"]);
+                    objAdd.ansDate = reader["ansDate"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                StudentMCQAns objAdd = new StudentMCQAns();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public StudentMCQAns getStudentMCQAnsWithID(StudentMCQAns obj)
+        {
+            StudentMCQAns objR = new StudentMCQAns();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getStudentMCQAnsWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@sMCQAnsID", obj.sMCQAnsID);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.sMCQAnsID = reader["sMCQAnsID"].ToString();
+                    objR.studentID = Convert.ToInt32(reader["studentID"]);
+                    objR.questionID = reader["questionID"].ToString();
+                    objR.isRight = Convert.ToInt32(reader["isRight"]);
+                    objR.ansDate = reader["ansDate"].ToString();
+
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public StudentMCQAns getStudentMCQAnsWithStudentID(StudentMCQAns obj)
+        {
+            StudentMCQAns objR = new StudentMCQAns();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getStudentMCQAnsWithStudentID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.sMCQAnsID = reader["sMCQAnsID"].ToString();
+                    objR.studentID = Convert.ToInt32(reader["studentID"]);
+                    objR.questionID = reader["questionID"].ToString();
+                    objR.isRight = Convert.ToInt32(reader["isRight"]);
+                    objR.ansDate = reader["ansDate"].ToString();
+
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public StudentMCQAns getStudentMCQAnsWithQuestionID(StudentMCQAns obj)
+        {
+            StudentMCQAns objR = new StudentMCQAns();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getStudentMCQAnsWithQuestionID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@questionID", obj.questionID);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.sMCQAnsID = reader["sMCQAnsID"].ToString();
+                    objR.studentID = Convert.ToInt32(reader["studentID"]);
+                    objR.questionID = reader["questionID"].ToString();
+                    objR.isRight = Convert.ToInt32(reader["isRight"]);
+                    objR.ansDate = reader["ansDate"].ToString();
+
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+        #endregion
+
+        #region PushNotificationToken
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setPushNotificationToken(PushNotificationToken obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setPushNotificationToken", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@pushNtID", obj.pushNtID);
+                cmd.Parameters.AddWithValue("@userID", obj.userID);
+                cmd.Parameters.AddWithValue("@userType", obj.userType);
+                cmd.Parameters.AddWithValue("@token", obj.token);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setPushNotificationTokenWithID(PushNotificationToken obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setPushNotificationTokenWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@pushNtID", obj.pushNtID);
+                cmd.Parameters.AddWithValue("@userID", obj.userID);
+                cmd.Parameters.AddWithValue("@userType", obj.userType);
+                cmd.Parameters.AddWithValue("@token", obj.token);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                    if (i != 0)
+                    {
+                        response.Massage = "Succesfull!";
+                        response.Status = 0;
+                    }
+                    else
+                    {
+                        response.Massage = "Unsuccesfull!";
+                        response.Status = 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<PushNotificationToken> getPushNotificationToken()
+        {
+            List<PushNotificationToken> objRList = new List<PushNotificationToken>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getPushNotificationToken", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    PushNotificationToken objAdd = new PushNotificationToken();
+                    objAdd.pushNtID = Convert.ToInt32(reader["pushNtID"]); 
+                    objAdd.userID = Convert.ToInt32(reader["userID"]);
+                    objAdd.userType = Convert.ToInt32(reader["userType"]);
+                    objAdd.token = reader["token"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                PushNotificationToken objAdd = new PushNotificationToken();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public PushNotificationToken getPushNotificationTokenWithID(PushNotificationToken obj)
+        {
+            PushNotificationToken objR = new PushNotificationToken();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getPushNotificationTokenWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@pushNtID", obj.pushNtID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.pushNtID = Convert.ToInt32(reader["pushNtID"]); 
+                    objR.userID = Convert.ToInt32(reader["userID"]);
+                    objR.userType = Convert.ToInt32(reader["userType"]);
+                    objR.token = reader["token"].ToString();
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
         #endregion
 
     }
