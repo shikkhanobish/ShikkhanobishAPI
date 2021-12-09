@@ -6243,6 +6243,41 @@ forthChoiceName: 'Chapter 1'
 
 
 
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response deleteAnswerVote(AnswerVote obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteAnswerVote", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@answerID", obj.answerID);
+                cmd.Parameters.AddWithValue("@userID", obj.userID);
+              
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
         #endregion
     }
 }
