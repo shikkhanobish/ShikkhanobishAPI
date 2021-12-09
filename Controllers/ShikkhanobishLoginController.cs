@@ -5350,9 +5350,10 @@ forthChoiceName: 'Chapter 1'
         }
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
-        public Notification getNotificationWithUserIDAndUserType(Notification obj)
+
+        public  List<Notification> getNotificationWithUserIDAndUserType(Notification obj)
         {
-            Notification objR = new Notification();
+            List<Notification> objRList = new List<Notification>();
             try
             {
                 Connection();
@@ -5364,27 +5365,32 @@ forthChoiceName: 'Chapter 1'
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    objR.notificationID = reader["notificationID"].ToString();
-                    objR.userId = Convert.ToInt32(reader["userId"]);
-                    objR.userType = Convert.ToInt32(reader["userType"]);
-                    objR.description = reader["description"].ToString();
-                    objR.refIDOne= reader["refIDOne"].ToString();
-                    objR.refIDTwo = reader["refIDTwo"].ToString();
-                    objR.refIDThree = reader["refIDThree"].ToString();
-                    objR.refIDFour = reader["refIDFour"].ToString();
-                    objR.notificationDate = reader["notificationDate"].ToString();
+                    Notification objAdd = new Notification();
+                    obj.notificationID = reader["notificationID"].ToString();
+                    obj.userId = Convert.ToInt32(reader["userId"]);
+                    obj.userType = Convert.ToInt32(reader["userType"]);
+                    obj.description = reader["description"].ToString();
+                    obj.refIDOne = reader["refIDOne"].ToString();
+                    obj.refIDTwo = reader["refIDTwo"].ToString();
+                    obj.refIDThree = reader["refIDThree"].ToString();
+                    obj.refIDFour = reader["refIDFour"].ToString();
+                    obj.notificationDate = reader["notificationDate"].ToString();
 
+                    objRList.Add(objAdd);
                 }
                 conn.Close();
             }
             catch (Exception ex)
             {
-                objR.Response = ex.Message;
+                Notification objAdd = new Notification();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
             }
-            return objR;
+            return objRList;
         }
 
-        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+            [System.Web.Http.AcceptVerbs("GET", "POST")]
 
         public Response deleteNotification(Notification obj)
         {
