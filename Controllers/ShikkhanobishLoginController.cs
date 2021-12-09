@@ -3329,9 +3329,9 @@ forthChoiceName: 'Chapter 1'
             return response;
         }
         [System.Web.Http.AcceptVerbs("GET", "POST")]
-        public List<TuiTionLog> getTuiTionLogWithID(TuiTionLog obj)
+        public TuiTionLog getTuiTionLogWithID(TuiTionLog obj)
         {
-            List<TuiTionLog> objRList = new List<TuiTionLog>();
+            TuiTionLog objAdd = new TuiTionLog();
             try
             {
                 Connection();
@@ -3342,7 +3342,6 @@ forthChoiceName: 'Chapter 1'
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    TuiTionLog objAdd = new TuiTionLog();
                     objAdd.tuitionLogID = reader["tuitionLogID"].ToString();
                     objAdd.subjectname = reader["subjectname"].ToString();
                     objAdd.studentName = reader["studentName"].ToString();
@@ -3355,18 +3354,16 @@ forthChoiceName: 'Chapter 1'
                     objAdd.chapterName = reader["chapterName"].ToString();
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.Response = "ok";
-
-                    objRList.Add(objAdd);
                 }
                 conn.Close();
             }
             catch (Exception ex)
             {
-                TuiTionLog objAdd = new TuiTionLog();
+
                 objAdd.Response = ex.Message;
-                objRList.Add(objAdd);
+
             }
-            return objRList;
+            return objAdd;
         }
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public List<TuiTionLog> getTuiTionLogNeW()
