@@ -1895,5 +1895,77 @@ namespace SHikkhanobishAPI.Controllers
         }
         #endregion
 
+        #region Data entry operator
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public async Task<Response> setdataentryOperatorTask(dataentryOperatorTask obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setdataentryOperatorTask", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@userID", obj.userID);
+                cmd.Parameters.AddWithValue("@MCQNumbers", obj.MCQNumbers);
+                cmd.Parameters.AddWithValue("@date", obj.date);
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@taskID", obj.taskID);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }          
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<dataentryOperatorTask> getdataentryOperatorTask()
+        {
+            List<dataentryOperatorTask> objRList = new List<dataentryOperatorTask>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getdataentryOperatorTask", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    dataentryOperatorTask objAdd = new dataentryOperatorTask();
+                    objAdd.userID = Convert.ToInt32(reader["userID"]);
+                    objAdd.MCQNumbers = reader["MCQNumbers"].ToString(); ;
+                    objAdd.date = reader["date"].ToString(); 
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.taskID = reader["taskID"].ToString();
+                    objAdd.Response = "OK";
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                dataentryOperatorTask objAdd = new dataentryOperatorTask();
+                var Response = ex.InnerException;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+
+        }
+        #endregion
+
     }
 }
