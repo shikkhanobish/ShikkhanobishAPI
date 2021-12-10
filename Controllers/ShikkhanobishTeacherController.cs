@@ -5,12 +5,15 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace SHikkhanobishAPI.Controllers
 {
@@ -1827,6 +1830,69 @@ namespace SHikkhanobishAPI.Controllers
         }
 
 
+        #endregion
+
+        #region FireBase Push Notification Api
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response SendFirebasePushNotification(string deviceApi)
+        {
+            Response res = new Response();
+            SendNotification(deviceApi);
+            return res;
+        }
+        public void SendNotification(string deviceApi)
+        {
+            try
+            {
+                dynamic data = new
+                {
+                    to = deviceApi, // Uncoment this if you want to test for single device
+                                             // registration_ids = singlebatch, // this is for multiple user 
+                    notification = new
+                    {
+                        title = "Title",     // Notification title
+                        body = "--message--",    // Notification body data
+                        link = "--link-- "      // When click on notification user redirect to this link
+                    }
+                };
+
+                var serializer = new JavaScriptSerializer();
+                var json = serializer.Serialize(data);
+                Byte[] byteArray = System.Text.Encoding.UTF8.GetBytes(json);
+
+                string SERVER_API_KEY = "AIzaSyAePO5y1cs53mMEkuiELXAntuRNlXltB0w";
+                string SENDER_ID = "477319880272";
+
+                WebRequest tRequest;
+                tRequest = WebRequest.Create("https://fcm.googleapis.com/fcm/send");
+                tRequest.Method = "post";
+                tRequest.ContentType = "application/json";
+                tRequest.Headers.Add(string.Format("Authorization: key={0}", SERVER_API_KEY));
+
+                tRequest.Headers.Add(string.Format("Sender: id={0}", SENDER_ID));
+
+                tRequest.ContentLength = byteArray.Length;
+                Stream dataStream = tRequest.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+
+                WebResponse tResponse = tRequest.GetResponse();
+
+                dataStream = tResponse.GetResponseStream();
+
+                StreamReader tReader = new StreamReader(dataStream);
+
+                String sResponseFromServer = tReader.ReadToEnd();
+
+                tReader.Close();
+                dataStream.Close();
+                tResponse.Close();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         #endregion
 
     }
