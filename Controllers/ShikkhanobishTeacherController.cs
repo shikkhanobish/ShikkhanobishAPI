@@ -1908,6 +1908,8 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@userID", obj.userID);
                 cmd.Parameters.AddWithValue("@MCQNumbers", obj.MCQNumbers);
                 cmd.Parameters.AddWithValue("@date", obj.date);
+                cmd.Parameters.AddWithValue("@endTime", obj.endTime);
+                cmd.Parameters.AddWithValue("@startTime", obj.startTime);
                 cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
                 cmd.Parameters.AddWithValue("@taskID", obj.taskID);
 
@@ -1947,7 +1949,9 @@ namespace SHikkhanobishAPI.Controllers
                     dataentryOperatorTask objAdd = new dataentryOperatorTask();
                     objAdd.userID = Convert.ToInt32(reader["userID"]);
                     objAdd.MCQNumbers = reader["MCQNumbers"].ToString(); ;
-                    objAdd.date = reader["date"].ToString(); 
+                    objAdd.date = reader["date"].ToString();
+                    objAdd.startTime = reader["startTime"].ToString();
+                    objAdd.endTime = reader["endTime"].ToString();
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.taskID = reader["taskID"].ToString();
                     objAdd.Response = "OK";
