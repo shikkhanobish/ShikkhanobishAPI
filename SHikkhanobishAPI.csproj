@@ -306,6 +306,7 @@
     <Compile Include="Models\Shikkhanobish\ReferralTable.cs" />
     <Compile Include="Models\Shikkhanobish\requestPayment.cs" />
     <Compile Include="Models\Shikkhanobish\searchForActiveTeacher.cs" />
+    <Compile Include="Models\Shikkhanobish\shiEmployee.cs" />
     <Compile Include="Models\Shikkhanobish\StudentEvaluation.cs" />
     <Compile Include="Models\Shikkhanobish\StudentMCQAns.cs" />
     <Compile Include="Models\Shikkhanobish\StudentReport.cs" />

@@ -6244,5 +6244,69 @@ forthChoiceName: 'Chapter 1'
 
 
         #endregion
+
+        #region ShiEmployee
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setshiEmployee(shiEmployee obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setshiEmployee", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@employeeID", obj.employeeID);
+                cmd.Parameters.AddWithValue("@employeeType", obj.employeeType);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<shiEmployee> setshiEmployee()
+        {
+            List<shiEmployee> objRList = new List<shiEmployee>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setshiEmployee", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    shiEmployee objAdd = new shiEmployee();
+                    objAdd.employeeID = Convert.ToInt32(reader["employeeID"]);
+                    objAdd.employeeType = Convert.ToInt32(reader["employeeType"]);
+                    objAdd.Response = "ok";
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                shiEmployee objAdd = new shiEmployee();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+        #endregion
     }
 }
