@@ -6104,7 +6104,6 @@ forthChoiceName: 'Chapter 1'
 
         #endregion
 
-
         #region AnswerVote
 
         
@@ -6282,7 +6281,7 @@ forthChoiceName: 'Chapter 1'
 
         #region ShiEmployee
         [System.Web.Http.AcceptVerbs("GET", "POST")]
-        public Response setshiEmployee(shiEmployee obj)
+        public async Task<Response> setshiEmployee(shiEmployee obj)
         {
             Response response = new Response();
             try
@@ -6292,6 +6291,8 @@ forthChoiceName: 'Chapter 1'
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@employeeID", obj.employeeID);
                 cmd.Parameters.AddWithValue("@employeeType", obj.employeeType);
+                cmd.Parameters.AddWithValue("@name", obj.name);
+                cmd.Parameters.AddWithValue("@phonenumber", obj.phonenumber);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -6310,16 +6311,50 @@ forthChoiceName: 'Chapter 1'
                 response.Massage = ex.Message;
                 response.Status = 0;
             }
+
+            
             return response;
         }
         [System.Web.Http.AcceptVerbs("GET", "POST")]
-        public List<shiEmployee> setshiEmployee()
+        public Response deleteShiEmployee(shiEmployee obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteShiEmployee", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@employeeID", obj.employeeID);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+
+
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<shiEmployee> getshiEmployee()
         {
             List<shiEmployee> objRList = new List<shiEmployee>();
             try
             {
                 Connection();
-                SqlCommand cmd = new SqlCommand("setshiEmployee", conn);
+                SqlCommand cmd = new SqlCommand("getshiEmployee", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -6328,6 +6363,8 @@ forthChoiceName: 'Chapter 1'
                     shiEmployee objAdd = new shiEmployee();
                     objAdd.employeeID = Convert.ToInt32(reader["employeeID"]);
                     objAdd.employeeType = Convert.ToInt32(reader["employeeType"]);
+                    objAdd.name = reader["name"].ToString();
+                    objAdd.phonenumber = reader["phonenumber"].ToString();
                     objAdd.Response = "ok";
 
                     objRList.Add(objAdd);
