@@ -293,6 +293,7 @@
     <Compile Include="Models\Shikkhanobish\AnswerVote.cs" />
     <Compile Include="Models\Shikkhanobish\AppVersion.cs" />
     <Compile Include="Models\Shikkhanobish\CallBackPayment.cs" />
+    <Compile Include="Models\Shikkhanobish\ChapterBasedTopic.cs" />
     <Compile Include="Models\Shikkhanobish\ClassChoice.cs" />
     <Compile Include="Models\Shikkhanobish\dataentryOperatorTask.cs" />
     <Compile Include="Models\Shikkhanobish\Notification.cs" />

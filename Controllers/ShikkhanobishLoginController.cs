@@ -6380,5 +6380,101 @@ forthChoiceName: 'Chapter 1'
             return objRList;
         }
         #endregion
+
+        #region ChapterBasedTopic
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response setChapterBasedTopic(ChapterBasedTopic obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setChapterBasedTopic", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@topicID", obj.topicID);
+     
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+
+       
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<ChapterBasedTopic> getChapterBasedTopic()
+        {
+            List<ChapterBasedTopic> objRList = new List<ChapterBasedTopic>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getChapterBasedTopic", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    ChapterBasedTopic objAdd = new ChapterBasedTopic();
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.topicID = Convert.ToInt32(reader["topicID"]);
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                ChapterBasedTopic objAdd = new ChapterBasedTopic();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public ChapterBasedTopic getChapterBasedTopicWithChapterID(ChapterBasedTopic obj)
+        {
+            ChapterBasedTopic objR = new ChapterBasedTopic();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getAnswerVoteWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objR.topicID = Convert.ToInt32(reader["topicID"]);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+        #endregion
     }
 }
