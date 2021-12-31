@@ -214,5 +214,42 @@ namespace SHikkhanobishAPI.Controllers
             }
             return response;
         }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<TestForCodePreview> getTestForCodePreview()
+        {
+            List<TestForCodePreview> objRList = new List<TestForCodePreview>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getTestForCodePreview", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    TestForCodePreview objAdd = new TestForCodePreview();
+                    objAdd.paraone = Convert.ToInt32(reader["paraone"]);
+                    objAdd.paratwo = reader["paratwo"].ToString();
+                    objAdd.parathree = Convert.ToDouble(reader["parathree"]);
+                    objAdd.parafour = (float)Convert.ToDouble(reader["parafour"]);
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                TestForCodePreview objAdd = new TestForCodePreview();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+
+
+
+
+
     }
 }
