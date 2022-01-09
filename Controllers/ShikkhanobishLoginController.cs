@@ -112,6 +112,8 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.city = reader["city"].ToString();
                     objAdd.name = reader["name"].ToString();
                     objAdd.institutionName = reader["institutionName"].ToString();
+                    objAdd.fatherNumber = reader["fatherNumber"].ToString();
+                    objAdd.motherNumber = reader["motherNumber"].ToString();
                     objRList.Add(objAdd);
                 }
                 conn.Close();
@@ -149,6 +151,8 @@ namespace SHikkhanobishAPI.Controllers
                     objR.city = reader["city"].ToString();
                     objR.name = reader["name"].ToString();
                     objR.institutionName = reader["institutionName"].ToString();
+                    objR.fatherNumber = reader["fatherNumber"].ToString();
+                    objR.motherNumber = reader["motherNumber"].ToString();
 
                 }
                 conn.Close();
@@ -184,7 +188,8 @@ namespace SHikkhanobishAPI.Controllers
                     objR.city = reader["city"].ToString();
                     objR.name = reader["name"].ToString();
                     objR.institutionName = reader["institutionName"].ToString();
-
+                    objR.fatherNumber = reader["fatherNumber"].ToString();
+                    objR.motherNumber = reader["motherNumber"].ToString();
                 }
                 conn.Close();
             }
@@ -214,6 +219,8 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@city", obj.city);
                 cmd.Parameters.AddWithValue("@name", obj.name);
                 cmd.Parameters.AddWithValue("@institutionName", obj.institutionName);
+                cmd.Parameters.AddWithValue("@fatherNumber", obj.fatherNumber);
+                cmd.Parameters.AddWithValue("@motherNumber", obj.motherNumber);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -253,6 +260,8 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@city", obj.city);
                 cmd.Parameters.AddWithValue("@name", obj.name);
                 cmd.Parameters.AddWithValue("@institutionName", obj.institutionName);
+                cmd.Parameters.AddWithValue("@fatherNumber", obj.fatherNumber);
+                cmd.Parameters.AddWithValue("@motherNumber", obj.motherNumber);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -6474,6 +6483,79 @@ forthChoiceName: 'Chapter 1'
             }
             return objR;
         }
+
+        #endregion
+
+
+        #region QuestionPDFLink
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response setQuestionPdfLink(QuestionPdfLink obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setQuestionPdfLink", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@link", obj.link);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<QuestionPdfLink> getQuestionPdfLink()
+        {
+            List<QuestionPdfLink> objRList = new List<QuestionPdfLink>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getQuestionPdfLink", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    QuestionPdfLink objAdd = new QuestionPdfLink();
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.link = reader["link"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                QuestionPdfLink objAdd = new QuestionPdfLink();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+
+       
 
         #endregion
     }

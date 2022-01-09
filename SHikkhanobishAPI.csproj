@@ -305,6 +305,7 @@
     <Compile Include="Models\Shikkhanobish\PromotionalMassage.cs" />
     <Compile Include="Models\Shikkhanobish\PushNotificationToken.cs" />
     <Compile Include="Models\Shikkhanobish\Question.cs" />
+    <Compile Include="Models\Shikkhanobish\QuestionPdfLink.cs" />
     <Compile Include="Models\Shikkhanobish\ReferralTable.cs" />
     <Compile Include="Models\Shikkhanobish\requestPayment.cs" />
     <Compile Include="Models\Shikkhanobish\searchForActiveTeacher.cs" />
