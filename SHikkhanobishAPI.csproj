@@ -320,6 +320,7 @@
     <Compile Include="Models\Shikkhanobish\TeacherReputation.cs" />
     <Compile Include="Models\Shikkhanobish\TeacherReview.cs" />
     <Compile Include="Models\Shikkhanobish\TeacherTest.cs" />
+    <Compile Include="Models\Shikkhanobish\Topic.cs" />
     <Compile Include="Models\Shikkhanobish\TuiTionLog.cs" />
     <Compile Include="Models\Shikkhanobish\TuitionRequestCount.cs" />
     <Compile Include="Models\Shikkhanobish\UpdateTeacher.cs" />
