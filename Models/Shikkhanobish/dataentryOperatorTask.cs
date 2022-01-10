@@ -11,6 +11,8 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public string taskID { get; set; }
         public int chapterID { get; set; }
         public string MCQNumbers { get; set; }
+        public string startTime { get; set; }
+        public string endTime { get; set; }
         public string date { get; set; }
         public string Response { get; set; }
 

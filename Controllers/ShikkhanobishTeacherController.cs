@@ -1897,7 +1897,7 @@ namespace SHikkhanobishAPI.Controllers
 
         #region Data entry operator
         [System.Web.Http.AcceptVerbs("GET", "POST")]
-        public async Task<Response> setdataentryOperatorTask(dataentryOperatorTask obj)
+        public Response setdataentryOperatorTask(dataentryOperatorTask obj)
         {
             Response response = new Response();
             try
@@ -1910,6 +1910,8 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@date", obj.date);
                 cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
                 cmd.Parameters.AddWithValue("@taskID", obj.taskID);
+                cmd.Parameters.AddWithValue("@startTime", obj.startTime);
+                cmd.Parameters.AddWithValue("@endTime", obj.endTime);
 
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
@@ -1950,6 +1952,8 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.date = reader["date"].ToString(); 
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.taskID = reader["taskID"].ToString();
+                    objAdd.startTime = reader["startTime"].ToString();
+                    objAdd.endTime = reader["endTime"].ToString();
                     objAdd.Response = "OK";
 
                     objRList.Add(objAdd);
