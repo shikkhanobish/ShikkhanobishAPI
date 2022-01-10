@@ -6515,6 +6515,7 @@ forthChoiceName: 'Chapter 1'
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
                 cmd.Parameters.AddWithValue("@link", obj.link);
+                cmd.Parameters.AddWithValue("@noOfQues", obj.noOfQues);
 
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
@@ -6555,6 +6556,7 @@ forthChoiceName: 'Chapter 1'
                     QuestionPdfLink objAdd = new QuestionPdfLink();
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.link = reader["link"].ToString();
+                    objAdd.noOfQues = Convert.ToInt32(reader["noOfQues"]);
 
                     objRList.Add(objAdd);
                 }

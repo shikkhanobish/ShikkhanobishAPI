@@ -9,6 +9,7 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
     {
         public int chapterID { get; set; }
         public string link { get; set; }
+        public int noOfQues { get; set; }
         public string Response { get; set; }
     }
 }
