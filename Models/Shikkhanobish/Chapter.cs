@@ -15,6 +15,8 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public int tuitionRequest { get; set; }
         public double avgRatting { get; set; }
         public int indexNo { get ; set ;}
+        public string description { get; set; }
+        public int purchaseRate { get; set; }
         public string Response { get; set; }
 }
 }

@@ -112,6 +112,8 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.city = reader["city"].ToString();
                     objAdd.name = reader["name"].ToString();
                     objAdd.institutionName = reader["institutionName"].ToString();
+                    objAdd.fatherNumber = reader["fatherNumber"].ToString();
+                    objAdd.motherNumber = reader["motherNumber"].ToString();
                     objRList.Add(objAdd);
                 }
                 conn.Close();
@@ -149,6 +151,8 @@ namespace SHikkhanobishAPI.Controllers
                     objR.city = reader["city"].ToString();
                     objR.name = reader["name"].ToString();
                     objR.institutionName = reader["institutionName"].ToString();
+                    objR.fatherNumber = reader["fatherNumber"].ToString();
+                    objR.motherNumber = reader["motherNumber"].ToString();
 
                 }
                 conn.Close();
@@ -184,7 +188,8 @@ namespace SHikkhanobishAPI.Controllers
                     objR.city = reader["city"].ToString();
                     objR.name = reader["name"].ToString();
                     objR.institutionName = reader["institutionName"].ToString();
-
+                    objR.fatherNumber = reader["fatherNumber"].ToString();
+                    objR.motherNumber = reader["motherNumber"].ToString();
                 }
                 conn.Close();
             }
@@ -214,6 +219,8 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@city", obj.city);
                 cmd.Parameters.AddWithValue("@name", obj.name);
                 cmd.Parameters.AddWithValue("@institutionName", obj.institutionName);
+                cmd.Parameters.AddWithValue("@fatherNumber", obj.fatherNumber);
+                cmd.Parameters.AddWithValue("@motherNumber", obj.motherNumber);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -253,6 +260,8 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@city", obj.city);
                 cmd.Parameters.AddWithValue("@name", obj.name);
                 cmd.Parameters.AddWithValue("@institutionName", obj.institutionName);
+                cmd.Parameters.AddWithValue("@fatherNumber", obj.fatherNumber);
+                cmd.Parameters.AddWithValue("@motherNumber", obj.motherNumber);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -299,6 +308,8 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.name = reader["name"].ToString();
                     objAdd.tuitionRequest = Convert.ToInt32(reader["tuitionRequest"]);
                     objAdd.indexNo = Convert.ToInt32(reader["indexNo"]);
+                    objAdd.description = reader["description"].ToString();
+                    objAdd.purchaseRate = Convert.ToInt32(reader["purchaseRate"]);
                     objRList.Add(objAdd);
                 }
                 conn.Close();
@@ -321,7 +332,7 @@ namespace SHikkhanobishAPI.Controllers
                 Connection();
                 SqlCommand cmd = new SqlCommand("getChapterWithID", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -333,7 +344,8 @@ namespace SHikkhanobishAPI.Controllers
                     objR.name = reader["name"].ToString();
                     objR.tuitionRequest = Convert.ToInt32(reader["tuitionRequest"]);
                     objR.indexNo = Convert.ToInt32(reader["indexNo"]);
-
+                    objR.description = reader["description"].ToString();
+                    objR.purchaseRate = Convert.ToInt32(reader["purchaseRate"]);
                 }
                 conn.Close();
             }
@@ -361,6 +373,8 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@tuitionRequest", 0);
                 cmd.Parameters.AddWithValue("@avgRatting", 0);
                 cmd.Parameters.AddWithValue("@indexNo", 0);
+                cmd.Parameters.AddWithValue("@description", obj.description);
+                cmd.Parameters.AddWithValue("@purchaseRate", obj.purchaseRate);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -391,6 +405,15 @@ namespace SHikkhanobishAPI.Controllers
                 SqlCommand cmd = new SqlCommand("updateChapter", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@classID", obj.classID);
+                cmd.Parameters.AddWithValue("@title", obj.title);
+                cmd.Parameters.AddWithValue("@name", obj.name);
+                cmd.Parameters.AddWithValue("@tuitionRequest", 0);
+                cmd.Parameters.AddWithValue("@avgRatting", 0);
+                cmd.Parameters.AddWithValue("@indexNo", 0);
+                cmd.Parameters.AddWithValue("@description", obj.description);
+                cmd.Parameters.AddWithValue("@purchaseRate", obj.purchaseRate);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -6104,7 +6127,6 @@ forthChoiceName: 'Chapter 1'
 
         #endregion
 
-
         #region AnswerVote
 
         
@@ -6277,6 +6299,277 @@ forthChoiceName: 'Chapter 1'
             }
             return response;
         }
+
+        #endregion
+
+        #region ShiEmployee
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public async Task<Response> setshiEmployee(shiEmployee obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setshiEmployee", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@employeeID", obj.employeeID);
+                cmd.Parameters.AddWithValue("@employeeType", obj.employeeType);
+                cmd.Parameters.AddWithValue("@name", obj.name);
+                cmd.Parameters.AddWithValue("@phonenumber", obj.phonenumber);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+
+            
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response deleteShiEmployee(shiEmployee obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteShiEmployee", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@employeeID", obj.employeeID);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+
+
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<shiEmployee> getshiEmployee()
+        {
+            List<shiEmployee> objRList = new List<shiEmployee>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getshiEmployee", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    shiEmployee objAdd = new shiEmployee();
+                    objAdd.employeeID = Convert.ToInt32(reader["employeeID"]);
+                    objAdd.employeeType = Convert.ToInt32(reader["employeeType"]);
+                    objAdd.name = reader["name"].ToString();
+                    objAdd.phonenumber = reader["phonenumber"].ToString();
+                    objAdd.Response = "ok";
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                shiEmployee objAdd = new shiEmployee();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+        #endregion
+
+        #region ChapterBasedTopic
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response setChapterBasedTopic(ChapterBasedTopic obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setChapterBasedTopic", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@topicID", obj.topicID);
+     
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+
+       
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<ChapterBasedTopic> getChapterBasedTopic()
+        {
+            List<ChapterBasedTopic> objRList = new List<ChapterBasedTopic>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getChapterBasedTopic", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    ChapterBasedTopic objAdd = new ChapterBasedTopic();
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.topicID = Convert.ToInt32(reader["topicID"]);
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                ChapterBasedTopic objAdd = new ChapterBasedTopic();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public ChapterBasedTopic getChapterBasedTopicWithChapterID(ChapterBasedTopic obj)
+        {
+            ChapterBasedTopic objR = new ChapterBasedTopic();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getAnswerVoteWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objR.topicID = Convert.ToInt32(reader["topicID"]);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+        #endregion
+
+
+        #region QuestionPDFLink
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response setQuestionPdfLink(QuestionPdfLink obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setQuestionPdfLink", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@link", obj.link);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<QuestionPdfLink> getQuestionPdfLink()
+        {
+            List<QuestionPdfLink> objRList = new List<QuestionPdfLink>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getQuestionPdfLink", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    QuestionPdfLink objAdd = new QuestionPdfLink();
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.link = reader["link"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                QuestionPdfLink objAdd = new QuestionPdfLink();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+
+       
 
         #endregion
     }

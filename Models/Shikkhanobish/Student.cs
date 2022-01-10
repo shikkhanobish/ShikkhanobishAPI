@@ -17,6 +17,8 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public string city { get; set; }
         public string name { get; set; }
         public string institutionName { get; set; }
+        public string fatherNumber { get; set; }
+        public string motherNumber { get; set; }
         public string Response { get; set; }
     }
 }
