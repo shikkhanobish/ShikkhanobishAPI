@@ -11,7 +11,6 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public int chapterID { get; set; }
         public string name { get; set; }
         public string description { get; set; }
-        public int purchaseRate { get; set; }
         public string Response { get; set; }
 
     }

@@ -1522,11 +1522,10 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.subjectID = Convert.ToInt32(reader["subjectID"]);
                     objAdd.title = reader["title"].ToString();
                     objAdd.avgRatting = Convert.ToDouble(reader["avgRatting"]);
-                    objAdd.name = reader["name"].ToString();                 
+                    objAdd.name = reader["name"].ToString();
+                    objAdd.groupName = reader["groupName"].ToString();
                     objAdd.tuitionRequest = Convert.ToInt32(reader["tuitionRequest"]);
                     objAdd.indexNo = Convert.ToInt32(reader["indexNo"]);
-                    objAdd.groupName = reader["groupName"].ToString();
-                    objAdd.purchaseRate = Convert.ToInt32(reader["purchaseRate"]);
                     objRList.Add(objAdd);
                 }
                 conn.Close();
@@ -1558,10 +1557,10 @@ namespace SHikkhanobishAPI.Controllers
                     objR.subjectID = Convert.ToInt32(reader["subjectID"]);
                     objR.title = reader["title"].ToString();
                     objR.name = reader["name"].ToString();
+                    objR.groupName = reader["groupName"].ToString();
                     objR.tuitionRequest = Convert.ToInt32(reader["tuitionRequest"]);
                     objR.indexNo = Convert.ToInt32(reader["indexNo "]);
-                    objR.groupName = reader["groupName"].ToString();
-                    objR.purchaseRate = Convert.ToInt32(reader["purchaseRate"]);
+
                 }
                 conn.Close();
             }
@@ -1585,11 +1584,10 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
                 cmd.Parameters.AddWithValue("@title", obj.title);
                 cmd.Parameters.AddWithValue("@name", obj.name);
+                cmd.Parameters.AddWithValue("@groupName", obj.groupName);
                 cmd.Parameters.AddWithValue("@tuitionRequest", 0);
                 cmd.Parameters.AddWithValue("@avgRatting", 0);
                 cmd.Parameters.AddWithValue("@indexNo ", 0);
-                cmd.Parameters.AddWithValue("@groupName", obj.groupName);
-                cmd.Parameters.AddWithValue("@purchaseRate", obj.purchaseRate);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -1619,16 +1617,7 @@ namespace SHikkhanobishAPI.Controllers
                 Connection();
                 SqlCommand cmd = new SqlCommand("updateSubject", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@classID", obj.classID);
-                cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
-                cmd.Parameters.AddWithValue("@title", obj.title);
-                cmd.Parameters.AddWithValue("@name", obj.name);
-                cmd.Parameters.AddWithValue("@tuitionRequest", 0);
-                cmd.Parameters.AddWithValue("@avgRatting", 0);
-                cmd.Parameters.AddWithValue("@indexNo ", 0);
-                cmd.Parameters.AddWithValue("@groupName", obj.groupName);
-                cmd.Parameters.AddWithValue("@purchaseRate", obj.purchaseRate);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -6586,7 +6575,7 @@ forthChoiceName: 'Chapter 1'
 
         #endregion
 
-        #region Topic
+        #region AnswerVote
 
 
 
@@ -6604,7 +6593,6 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
                 cmd.Parameters.AddWithValue("@name", obj.name);
                 cmd.Parameters.AddWithValue("@description", obj.description);
-                cmd.Parameters.AddWithValue("@purchaseRate", obj.purchaseRate);
 
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
@@ -6641,7 +6629,6 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
                 cmd.Parameters.AddWithValue("@name", obj.name);
                 cmd.Parameters.AddWithValue("@description", obj.description);
-                cmd.Parameters.AddWithValue("@purchaseRate", obj.purchaseRate);
 
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
@@ -6681,8 +6668,7 @@ forthChoiceName: 'Chapter 1'
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.name = reader["name"].ToString();
                     objAdd.description = reader["description"].ToString();
-                    objAdd.purchaseRate = Convert.ToInt32(reader["purchaseRate"]);
-
+                    
                     objRList.Add(objAdd);
                 }
                 conn.Close();
@@ -6714,7 +6700,7 @@ forthChoiceName: 'Chapter 1'
                     objR.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objR.name = reader["name"].ToString();
                     objR.description = reader["description"].ToString();
-                    objR.purchaseRate = Convert.ToInt32(reader["purchaseRate"]);
+
                 }
                 conn.Close();
             }
@@ -6726,6 +6712,5 @@ forthChoiceName: 'Chapter 1'
         }
 
         #endregion
-
     }
 }
