@@ -1703,7 +1703,7 @@ namespace SHikkhanobishAPI.Controllers
                     objR.groupName = reader["groupName"].ToString();
                     objR.tuitionRequest = Convert.ToInt32(reader["tuitionRequest"]);
                     objR.indexNo = Convert.ToInt32(reader["indexNo "]);
-                    objR.purchaseRate = Convert.ToInt32(reader["purchaseRate "]);
+                    objR.purchaseRate = Convert.ToInt32(reader["purchaseRate"]);
 
                 }
                 conn.Close();
@@ -1732,7 +1732,7 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@tuitionRequest", 0);
                 cmd.Parameters.AddWithValue("@avgRatting", 0);
                 cmd.Parameters.AddWithValue("@indexNo ", 0);
-                cmd.Parameters.AddWithValue("@indexNo ", obj.purchaseRate);
+                cmd.Parameters.AddWithValue("@purchaseRate ", obj.purchaseRate);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -1771,7 +1771,7 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@tuitionRequest", 0);
                 cmd.Parameters.AddWithValue("@avgRatting", 0);
                 cmd.Parameters.AddWithValue("@indexNo ", 0);
-                cmd.Parameters.AddWithValue("@indexNo ", obj.purchaseRate);
+                cmd.Parameters.AddWithValue("@purchaseRate ", obj.purchaseRate);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
