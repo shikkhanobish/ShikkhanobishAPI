@@ -6694,7 +6694,7 @@ forthChoiceName: 'Chapter 1'
                     QuestionPdfLink objAdd = new QuestionPdfLink();
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.link = reader["link"].ToString();
-                    objAdd.noOfQues = Convert.ToInt32(reader["noOfQues"]);
+
                     objRList.Add(objAdd);
                 }
                 conn.Close();
@@ -6708,7 +6708,7 @@ forthChoiceName: 'Chapter 1'
             return objRList;
         }
 
-
+       
 
         #endregion
 

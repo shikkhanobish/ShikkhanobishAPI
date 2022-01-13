@@ -12,5 +12,6 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public string name { get; set; }
         public string description { get; set; }
         public string Response { get; set; }
+
     }
 }
