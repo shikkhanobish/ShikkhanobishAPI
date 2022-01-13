@@ -373,8 +373,8 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@tuitionRequest", 0);
                 cmd.Parameters.AddWithValue("@avgRatting", 0);
                 cmd.Parameters.AddWithValue("@indexNo", 0);
-                cmd.Parameters.AddWithValue("@description", obj.description);
-                cmd.Parameters.AddWithValue("@purchaseRate", obj.purchaseRate);
+                cmd.Parameters.AddWithValue("@description", "This is a description");
+                cmd.Parameters.AddWithValue("@purchaseRate", 500);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -435,6 +435,7 @@ namespace SHikkhanobishAPI.Controllers
             return response;
         }
         #endregion
+
 
 
         #region ClassInfo
@@ -6556,7 +6557,6 @@ forthChoiceName: 'Chapter 1'
                     QuestionPdfLink objAdd = new QuestionPdfLink();
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.link = reader["link"].ToString();
-                    objAdd.noOfQues = Convert.ToInt32(reader["noOfQues"]);
 
                     objRList.Add(objAdd);
                 }
