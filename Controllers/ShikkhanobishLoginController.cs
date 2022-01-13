@@ -373,8 +373,8 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@tuitionRequest", 0);
                 cmd.Parameters.AddWithValue("@avgRatting", 0);
                 cmd.Parameters.AddWithValue("@indexNo", 0);
-                cmd.Parameters.AddWithValue("@description", obj.description);
-                cmd.Parameters.AddWithValue("@purchaseRate", obj.purchaseRate);
+                cmd.Parameters.AddWithValue("@description", "This is a description");
+                cmd.Parameters.AddWithValue("@purchaseRate", 500);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -436,6 +436,144 @@ namespace SHikkhanobishAPI.Controllers
         }
         #endregion
 
+
+        #region Topic
+
+
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response setTopic(Topic obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setTopic", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@topicID", obj.topicID);
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@name", obj.name);
+                cmd.Parameters.AddWithValue("@description", obj.description);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response setTopicWithID(Topic obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setTopicWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@topicID", obj.topicID);
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@name", obj.name);
+                cmd.Parameters.AddWithValue("@description", obj.description);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<Topic> getTopic()
+        {
+            List<Topic> objRList = new List<Topic>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getTopic", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Topic objAdd = new Topic();
+                    objAdd.topicID = Convert.ToInt32(reader["topicID"]);
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.name = reader["name"].ToString();
+                    objAdd.description = reader["description"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                Topic objAdd = new Topic();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Topic getTopicWithID(Topic obj)
+        {
+            Topic objR = new Topic();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getTopicWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@topicID", obj.topicID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objR.topicID = Convert.ToInt32(reader["topicID"]);
+                    objR.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objR.name = reader["name"].ToString();
+                    objR.description = reader["description"].ToString();
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                objR.Response = ex.Message;
+            }
+            return objR;
+        }
+
+        #endregion
 
         #region ClassInfo
         [System.Web.Http.AcceptVerbs("GET", "POST")]
@@ -1522,11 +1660,10 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.subjectID = Convert.ToInt32(reader["subjectID"]);
                     objAdd.title = reader["title"].ToString();
                     objAdd.avgRatting = Convert.ToDouble(reader["avgRatting"]);
-                    objAdd.name = reader["name"].ToString();                 
+                    objAdd.name = reader["name"].ToString();
+                    objAdd.groupName = reader["groupName"].ToString();
                     objAdd.tuitionRequest = Convert.ToInt32(reader["tuitionRequest"]);
                     objAdd.indexNo = Convert.ToInt32(reader["indexNo"]);
-                    objAdd.groupName = reader["groupName"].ToString();
-                    objAdd.purchaseRate = Convert.ToInt32(reader["purchaseRate"]);
                     objRList.Add(objAdd);
                 }
                 conn.Close();
@@ -1558,10 +1695,10 @@ namespace SHikkhanobishAPI.Controllers
                     objR.subjectID = Convert.ToInt32(reader["subjectID"]);
                     objR.title = reader["title"].ToString();
                     objR.name = reader["name"].ToString();
+                    objR.groupName = reader["groupName"].ToString();
                     objR.tuitionRequest = Convert.ToInt32(reader["tuitionRequest"]);
                     objR.indexNo = Convert.ToInt32(reader["indexNo "]);
-                    objR.groupName = reader["groupName"].ToString();
-                    objR.purchaseRate = Convert.ToInt32(reader["purchaseRate"]);
+
                 }
                 conn.Close();
             }
@@ -1585,11 +1722,10 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
                 cmd.Parameters.AddWithValue("@title", obj.title);
                 cmd.Parameters.AddWithValue("@name", obj.name);
+                cmd.Parameters.AddWithValue("@groupName", obj.groupName);
                 cmd.Parameters.AddWithValue("@tuitionRequest", 0);
                 cmd.Parameters.AddWithValue("@avgRatting", 0);
                 cmd.Parameters.AddWithValue("@indexNo ", 0);
-                cmd.Parameters.AddWithValue("@groupName", obj.groupName);
-                cmd.Parameters.AddWithValue("@purchaseRate", obj.purchaseRate);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -1619,16 +1755,7 @@ namespace SHikkhanobishAPI.Controllers
                 Connection();
                 SqlCommand cmd = new SqlCommand("updateSubject", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@classID", obj.classID);
-                cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
-                cmd.Parameters.AddWithValue("@title", obj.title);
-                cmd.Parameters.AddWithValue("@name", obj.name);
-                cmd.Parameters.AddWithValue("@tuitionRequest", 0);
-                cmd.Parameters.AddWithValue("@avgRatting", 0);
-                cmd.Parameters.AddWithValue("@indexNo ", 0);
-                cmd.Parameters.AddWithValue("@groupName", obj.groupName);
-                cmd.Parameters.AddWithValue("@purchaseRate", obj.purchaseRate);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -6567,7 +6694,6 @@ forthChoiceName: 'Chapter 1'
                     QuestionPdfLink objAdd = new QuestionPdfLink();
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.link = reader["link"].ToString();
-                    objAdd.noOfQues = Convert.ToInt32(reader["noOfQues"]);
 
                     objRList.Add(objAdd);
                 }
@@ -6582,150 +6708,10 @@ forthChoiceName: 'Chapter 1'
             return objRList;
         }
 
-
-
-        #endregion
-
-        #region Topic
-
-
-
-        [System.Web.Http.AcceptVerbs("GET", "POST")]
-
-        public Response setTopic(Topic obj)
-        {
-            Response response = new Response();
-            try
-            {
-                Connection();
-                SqlCommand cmd = new SqlCommand("setTopic", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@topicID", obj.topicID);
-                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
-                cmd.Parameters.AddWithValue("@name", obj.name);
-                cmd.Parameters.AddWithValue("@description", obj.description);
-                cmd.Parameters.AddWithValue("@purchaseRate", obj.purchaseRate);
-
-                conn.Open();
-                int i = cmd.ExecuteNonQuery();
-                if (i != 0)
-                {
-                    response.Massage = "Succesfull!";
-                    response.Status = 0;
-                }
-                else
-                {
-                    response.Massage = "Unsuccesfull!";
-                    response.Status = 1;
-                }
-            }
-            catch (Exception ex)
-            {
-                response.Massage = ex.Message;
-                response.Status = 0;
-            }
-            return response;
-        }
-
-        [System.Web.Http.AcceptVerbs("GET", "POST")]
-
-        public Response setTopicWithID(Topic obj)
-        {
-            Response response = new Response();
-            try
-            {
-                Connection();
-                SqlCommand cmd = new SqlCommand("setTopicWithID", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@topicID", obj.topicID);
-                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
-                cmd.Parameters.AddWithValue("@name", obj.name);
-                cmd.Parameters.AddWithValue("@description", obj.description);
-                cmd.Parameters.AddWithValue("@purchaseRate", obj.purchaseRate);
-
-                conn.Open();
-                int i = cmd.ExecuteNonQuery();
-                if (i != 0)
-                {
-                    response.Massage = "Succesfull!";
-                    response.Status = 0;
-                }
-                else
-                {
-                    response.Massage = "Unsuccesfull!";
-                    response.Status = 1;
-                }
-            }
-            catch (Exception ex)
-            {
-                response.Massage = ex.Message;
-                response.Status = 0;
-            }
-            return response;
-        }
-        [System.Web.Http.AcceptVerbs("GET", "POST")]
-        public List<Topic> getTopic()
-        {
-            List<Topic> objRList = new List<Topic>();
-            try
-            {
-                Connection();
-                SqlCommand cmd = new SqlCommand("getTopic", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    Topic objAdd = new Topic();
-                    objAdd.topicID = Convert.ToInt32(reader["topicID"]);
-                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
-                    objAdd.name = reader["name"].ToString();
-                    objAdd.description = reader["description"].ToString();
-                    objAdd.purchaseRate = Convert.ToInt32(reader["purchaseRate"]);
-
-                    objRList.Add(objAdd);
-                }
-                conn.Close();
-            }
-            catch (Exception ex)
-            {
-                Topic objAdd = new Topic();
-                objAdd.Response = ex.Message;
-                objRList.Add(objAdd);
-            }
-            return objRList;
-        }
-
-        [System.Web.Http.AcceptVerbs("GET", "POST")]
-        public Topic getTopicWithID(Topic obj)
-        {
-            Topic objR = new Topic();
-            try
-            {
-                Connection();
-                SqlCommand cmd = new SqlCommand("getTopicWithID", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@topicID", obj.topicID);
-                conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    objR.topicID = Convert.ToInt32(reader["topicID"]);
-                    objR.chapterID = Convert.ToInt32(reader["chapterID"]);
-                    objR.name = reader["name"].ToString();
-                    objR.description = reader["description"].ToString();
-                    objR.purchaseRate = Convert.ToInt32(reader["purchaseRate"]);
-                }
-                conn.Close();
-            }
-            catch (Exception ex)
-            {
-                objR.Response = ex.Message;
-            }
-            return objR;
-        }
+       
 
         #endregion
 
+       
     }
 }
