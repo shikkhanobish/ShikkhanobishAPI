@@ -1423,6 +1423,10 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.secondChoiceID = reader["secondChoiceID"].ToString();
                     objAdd.thirdChoiceID = reader["thirdChoiceID"].ToString();
                     objAdd.forthChoiceID = reader["forthChoiceID"].ToString();
+                    objAdd.topicID = Convert.ToInt32(reader["topicID"]);
+                    objAdd.isTextOrVideo = Convert.ToInt32(reader["isTextOrVideo"]);
+                    objAdd.topicName = reader["topicName"].ToString();
+                    objAdd.videoURL = reader["videoURL"].ToString();
                     objRList.Add(objAdd);
                 }
                 conn.Close();
@@ -1469,6 +1473,10 @@ namespace SHikkhanobishAPI.Controllers
                     objR.thirdChoiceName = reader["thirdChoiceName"].ToString();
                     objR.forthChoiceName = reader["forthChoiceName"].ToString();
                     objR.teacherEarn = Convert.ToDouble(reader["teacherEarn"]);
+                    objR.topicID = Convert.ToInt32(reader["topicID"]);
+                    objR.isTextOrVideo = Convert.ToInt32(reader["isTextOrVideo"]);
+                    objR.topicName = reader["topicName"].ToString();
+                    objR.videoURL = reader["videoURL"].ToString();
                     objRList.Add(objR);
                 }
                 conn.Close();
@@ -1513,6 +1521,10 @@ namespace SHikkhanobishAPI.Controllers
                     objR.thirdChoiceName = reader["thirdChoiceName"].ToString();
                     objR.forthChoiceName = reader["forthChoiceName"].ToString();
                     objR.teacherEarn = Convert.ToDouble(reader["teacherEarn"]);
+                    objR.topicID = Convert.ToInt32(reader["topicID"]);
+                    objR.isTextOrVideo = Convert.ToInt32(reader["isTextOrVideo"]);
+                    objR.topicName = reader["topicName"].ToString();
+                    objR.videoURL = reader["videoURL"].ToString();
                 }
                 conn.Close();
             }
@@ -1549,6 +1561,11 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@teacherName", obj.teacherName);
                 cmd.Parameters.AddWithValue("@studentName", obj.studentName);
                 cmd.Parameters.AddWithValue("@teacherEarn", obj.teacherEarn);
+                cmd.Parameters.AddWithValue("@topicID", obj.topicID);
+                cmd.Parameters.AddWithValue("@topicName", obj.topicName);
+                cmd.Parameters.AddWithValue("@isTestOrVideo", obj.isTextOrVideo);
+                cmd.Parameters.AddWithValue("@videoURL", obj.videoURL);
+
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -1637,9 +1654,7 @@ namespace SHikkhanobishAPI.Controllers
             }
             return response;
         }
-
         #endregion
-
 
         #region Subject
         [System.Web.Http.AcceptVerbs("GET", "POST")]
@@ -3451,7 +3466,7 @@ forthChoiceName: 'Chapter 1'
             try
             {
                 Connection();
-                SqlCommand cmd = new SqlCommand("setTuiTionLog", conn);    
+                SqlCommand cmd = new SqlCommand("setTuiTionLog", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@tuitionLogID", obj.tuitionLogID);
                 cmd.Parameters.AddWithValue("@studentName", obj.studentName);
@@ -3464,6 +3479,11 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@pendingTeacherID", obj.pendingTeacherID);
                 cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
                 cmd.Parameters.AddWithValue("@chapterName", obj.chapterName);
+                cmd.Parameters.AddWithValue("@isTextOrVideo", obj.isTextOrVideo);
+                cmd.Parameters.AddWithValue("@img1", obj.img1);
+                cmd.Parameters.AddWithValue("@img2", obj.img2);
+                cmd.Parameters.AddWithValue("@img3", obj.img3);
+                cmd.Parameters.AddWithValue("@img4", obj.img4);
 
 
                 conn.Open();
@@ -3515,6 +3535,11 @@ forthChoiceName: 'Chapter 1'
                     objAdd.pendingTeacherID = Convert.ToInt32(reader["pendingTeacherID"]);
                     objAdd.chapterName = reader["chapterName"].ToString();
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.isTextOrVideo = Convert.ToInt32(reader["isTextOrVideo"]);
+                    objAdd.img1 = reader["img1"].ToString();
+                    objAdd.img2 = reader["img2"].ToString();
+                    objAdd.img3 = reader["img3"].ToString();
+                    objAdd.img4 = reader["img4"].ToString();
                     objAdd.Response = "ok";
                 }
                 conn.Close();
@@ -3552,6 +3577,11 @@ forthChoiceName: 'Chapter 1'
                     objAdd.pendingTeacherID = Convert.ToInt32(reader["pendingTeacherID"]);
                     objAdd.chapterName = reader["chapterName"].ToString();
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.isTextOrVideo = Convert.ToInt32(reader["isTextOrVideo"]);
+                    objAdd.img1 = reader["img1"].ToString();
+                    objAdd.img2 = reader["img2"].ToString();
+                    objAdd.img3 = reader["img3"].ToString();
+                    objAdd.img4 = reader["img4"].ToString();
                     objAdd.Response = "ok";
 
                     objRList.Add(objAdd);

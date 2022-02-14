@@ -26,6 +26,11 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public string thirdChoiceName { get; set; }
         public string forthChoiceName { get; set; }
         public double teacherEarn { get; set; }
+        public int MyProperty { get; set; }
+        public int topicID { get; set; }
+        public string topicName { get; set; }
+        public int isTextOrVideo { get; set; }
+        public string videoURL { get; set; }
 
     }
 }
