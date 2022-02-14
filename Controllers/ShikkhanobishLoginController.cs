@@ -1726,6 +1726,7 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@tuitionRequest", 0);
                 cmd.Parameters.AddWithValue("@avgRatting", 0);
                 cmd.Parameters.AddWithValue("@indexNo ", 0);
+                cmd.Parameters.AddWithValue("@purchaseRate ", 0);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -6676,7 +6677,38 @@ forthChoiceName: 'Chapter 1'
             return response;
         }
 
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
 
+        public Response deleteQuestionPdfLink(QuestionPdfLink obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("deleteQuestionPdfLink", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
 
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public List<QuestionPdfLink> getQuestionPdfLink()
@@ -6694,6 +6726,7 @@ forthChoiceName: 'Chapter 1'
                     QuestionPdfLink objAdd = new QuestionPdfLink();
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.link = reader["link"].ToString();
+                    objAdd.noOfQues = Convert.ToInt32(reader["noOfQues"]);
 
                     objRList.Add(objAdd);
                 }

@@ -23,6 +23,7 @@ namespace SHikkhanobishAPI.Controllers
         private SqlConnection conn;
         public int globalTeacherAppVersion = 19;
         public int globalStudentAppVersion = 5;
+        public DateTime DataOperatorStaringWeek = new DateTime(2022,02,1);
         public const bool isSearchForActiveTeacher = true;
         public void Connection()
         {
@@ -42,6 +43,12 @@ namespace SHikkhanobishAPI.Controllers
             toalRating = totalSum / (fs + fos + th + to + on);
 
             return toalRating;
+        }
+        
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public DateTime GetDatOperatorStaringTime()
+        {
+            return DataOperatorStaringWeek;
         }
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public async Task<string> SearchActiveTeacher()
