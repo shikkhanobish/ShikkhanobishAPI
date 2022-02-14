@@ -19,5 +19,10 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public string chapterName { get; set; }
         public int pendingTeacherID { get; set; }
         public string Response { get; set; }
+        public int isTextOrVideo { get; set; }
+        public string img1 { get; set; }
+        public string img2 { get; set; }
+        public string img3 { get; set; }
+        public string img4 { get; set; }
     }
 }
