@@ -3567,6 +3567,56 @@ forthChoiceName: 'Chapter 1'
             }
             return objAdd;
         }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public TuiTionLog getTuitionLogWithStudentID(TuiTionLog obj)
+        {
+            TuiTionLog objAdd = new TuiTionLog();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getTuitionLogWithStudentID", conn);
+                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objAdd.tuitionLogID = reader["tuitionLogID"].ToString();
+                    objAdd.subjectname = reader["subjectname"].ToString();
+                    objAdd.studentName = reader["studentName"].ToString();
+                    objAdd.date = reader["date"].ToString();
+                    objAdd.subjectID = Convert.ToInt32(reader["subjectID"]);
+                    objAdd.description = reader["description"].ToString();
+                    objAdd.studentID = Convert.ToInt32(reader["studentID"]);
+                    objAdd.tuitionLogStatus = Convert.ToInt32(reader["tuitionLogStatus"]);
+                    objAdd.pendingTeacherID = Convert.ToInt32(reader["pendingTeacherID"]);
+                    objAdd.chapterName = reader["chapterName"].ToString();
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.isTextOrVideo = Convert.ToInt32(reader["isTextOrVideo"]);
+                    objAdd.img1 = reader["img1"].ToString();
+                    objAdd.img2 = reader["img2"].ToString();
+                    objAdd.img3 = reader["img3"].ToString();
+                    objAdd.img4 = reader["img4"].ToString();
+                    objAdd.approval = Convert.ToInt32(reader["approval"]);
+                    objAdd.teacherID = reader["teacherID"].ToString();
+                    objAdd.teacherName = reader["teacherName"].ToString();
+                    objAdd.ansText = reader["ansText"].ToString();
+                    objAdd.ansImg = reader["ansImg"].ToString();
+                    objAdd.ansVideo = reader["ansVideo"].ToString();
+                    objAdd.Response = "ok";
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+                objAdd.Response = ex.Message;
+
+            }
+            return objAdd;
+        }
+
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public List<TuiTionLog> getTuiTionLogNeW()
         {
