@@ -31,6 +31,6 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public string topicName { get; set; }
         public int isTextOrVideo { get; set; }
         public string videoURL { get; set; }
-
+        public int approval { get; set; }
     }
 }

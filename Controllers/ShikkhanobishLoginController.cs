@@ -1427,6 +1427,7 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.isTextOrVideo = Convert.ToInt32(reader["isTextOrVideo"]);
                     objAdd.topicName = reader["topicName"].ToString();
                     objAdd.videoURL = reader["videoURL"].ToString();
+                    objAdd.approval = Convert.ToInt32(reader["approval"]);
                     objRList.Add(objAdd);
                 }
                 conn.Close();
@@ -1477,6 +1478,7 @@ namespace SHikkhanobishAPI.Controllers
                     objR.isTextOrVideo = Convert.ToInt32(reader["isTextOrVideo"]);
                     objR.topicName = reader["topicName"].ToString();
                     objR.videoURL = reader["videoURL"].ToString();
+                    objR.approval = Convert.ToInt32(reader["approval"]);
                     objRList.Add(objR);
                 }
                 conn.Close();
@@ -1525,6 +1527,7 @@ namespace SHikkhanobishAPI.Controllers
                     objR.isTextOrVideo = Convert.ToInt32(reader["isTextOrVideo"]);
                     objR.topicName = reader["topicName"].ToString();
                     objR.videoURL = reader["videoURL"].ToString();
+                    objR.approval = Convert.ToInt32(reader["approval"]);
                 }
                 conn.Close();
             }
@@ -1563,8 +1566,9 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@teacherEarn", obj.teacherEarn);
                 cmd.Parameters.AddWithValue("@topicID", obj.topicID);
                 cmd.Parameters.AddWithValue("@topicName", obj.topicName);
-                cmd.Parameters.AddWithValue("@isTestOrVideo", obj.isTextOrVideo);
+                cmd.Parameters.AddWithValue("@isTextOrVideo", obj.isTextOrVideo);
                 cmd.Parameters.AddWithValue("@videoURL", obj.videoURL);
+                cmd.Parameters.AddWithValue("@approval", 0);
 
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
@@ -3484,7 +3488,12 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@img2", obj.img2);
                 cmd.Parameters.AddWithValue("@img3", obj.img3);
                 cmd.Parameters.AddWithValue("@img4", obj.img4);
-
+                cmd.Parameters.AddWithValue("@approval", 0);
+                cmd.Parameters.AddWithValue("@teacherID", 0);
+                cmd.Parameters.AddWithValue("@teacherName", "n/a");
+                cmd.Parameters.AddWithValue("@ansText", "n/a");
+                cmd.Parameters.AddWithValue("@ansImg", "n/a");
+                cmd.Parameters.AddWithValue("@ansVideo", "n/a");
 
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
@@ -3540,6 +3549,12 @@ forthChoiceName: 'Chapter 1'
                     objAdd.img2 = reader["img2"].ToString();
                     objAdd.img3 = reader["img3"].ToString();
                     objAdd.img4 = reader["img4"].ToString();
+                    objAdd.approval = Convert.ToInt32(reader["approval"]);
+                    objAdd.teacherID = reader["teacherID"].ToString();
+                    objAdd.teacherName = reader["teacherName"].ToString();
+                    objAdd.ansText = reader["ansText"].ToString();
+                    objAdd.ansImg = reader["ansImg"].ToString();
+                    objAdd.ansVideo = reader["ansVideo"].ToString();
                     objAdd.Response = "ok";
                 }
                 conn.Close();
@@ -3582,6 +3597,12 @@ forthChoiceName: 'Chapter 1'
                     objAdd.img2 = reader["img2"].ToString();
                     objAdd.img3 = reader["img3"].ToString();
                     objAdd.img4 = reader["img4"].ToString();
+                    objAdd.approval = Convert.ToInt32(reader["approval"]);
+                    objAdd.teacherID = reader["teacherID"].ToString();
+                    objAdd.teacherName = reader["teacherName"].ToString();
+                    objAdd.ansText = reader["ansText"].ToString();
+                    objAdd.ansImg = reader["ansImg"].ToString();
+                    objAdd.ansVideo = reader["ansVideo"].ToString();
                     objAdd.Response = "ok";
 
                     objRList.Add(objAdd);
