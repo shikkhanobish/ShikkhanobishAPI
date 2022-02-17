@@ -1271,6 +1271,10 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.cardID = reader["cardID"].ToString();
                     objAdd.isVoucherUsed = Convert.ToInt32(reader["isVoucherUsed"]);
                     objAdd.voucherID = Convert.ToInt32(reader["voucherID"]);
+                    objAdd.name = reader["name"].ToString();
+                    objAdd.description = reader["description"].ToString();
+                    objAdd.type = reader["type"].ToString();
+                    objAdd.invoiceID = reader["invoiceID"].ToString();
                     objRList.Add(objAdd);
                 }
                 conn.Close();
@@ -1310,6 +1314,9 @@ namespace SHikkhanobishAPI.Controllers
                     objR.isVoucherUsed = Convert.ToInt32(reader["isVoucherUsed"]);
                     objR.name = reader["name"].ToString();
                     objR.voucherID = Convert.ToInt32(reader["voucherID"]);
+                    objR.description = reader["description"].ToString();
+                    objR.type = reader["type"].ToString();
+                    objR.invoiceID = reader["invoiceID"].ToString();
                     objRList.Add(objR);
 
                 }
@@ -1324,6 +1331,50 @@ namespace SHikkhanobishAPI.Controllers
             return objRList;
         }
 
+        
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<StudentPaymentHistory> getStudentPaymentHistoryWithInvoiceID(StudentPaymentHistory obj)
+        {
+            List<StudentPaymentHistory> objRList = new List<StudentPaymentHistory>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getStudentPaymentHistoryWithInvoiceID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@invoiceID", obj.invoiceID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    StudentPaymentHistory objR = new StudentPaymentHistory();
+                    objR.studentID = Convert.ToInt32(reader["studentID"]);
+                    objR.paymentID = reader["paymentID"].ToString();
+                    objR.date = reader["date"].ToString();
+                    objR.trxID = reader["trxID"].ToString();
+                    objR.amountTaka = Convert.ToInt32(reader["amountTaka"]);
+                    objR.amountCoin = Convert.ToInt32(reader["amountCoin"]);
+                    objR.medium = reader["medium"].ToString();
+                    objR.cardID = reader["cardID"].ToString();
+                    objR.isVoucherUsed = Convert.ToInt32(reader["isVoucherUsed"]);
+                    objR.name = reader["name"].ToString();
+                    objR.voucherID = Convert.ToInt32(reader["voucherID"]);
+                    objR.description = reader["description"].ToString();
+                    objR.type = reader["type"].ToString();
+                    objR.invoiceID = reader["invoiceID"].ToString();
+                    objRList.Add(objR);
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                StudentPaymentHistory objR = new StudentPaymentHistory();
+                objR.Response = ex.Message;
+                objRList.Add(objR);
+            }
+            return objRList;
+        }
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Response setStudentPaymentHistory(StudentPaymentHistory obj)
         {
@@ -1344,6 +1395,9 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@isVoucherUsed", obj.isVoucherUsed);
                 cmd.Parameters.AddWithValue("@voucherID", obj.voucherID);
                 cmd.Parameters.AddWithValue("@cardID", obj.cardID);
+                cmd.Parameters.AddWithValue("@description", obj.description);
+                cmd.Parameters.AddWithValue("@type", obj.type);
+                cmd.Parameters.AddWithValue("@invoiceID", obj.invoiceID);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)
@@ -1373,7 +1427,21 @@ namespace SHikkhanobishAPI.Controllers
                 Connection();
                 SqlCommand cmd = new SqlCommand("updateStudentPaymentHistory", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+                cmd.Parameters.AddWithValue("@paymentID", obj.paymentID);
+                cmd.Parameters.AddWithValue("@date", obj.date);
+                cmd.Parameters.AddWithValue("@trxID", obj.trxID);
+                cmd.Parameters.AddWithValue("@amountTaka", obj.amountTaka);
+                cmd.Parameters.AddWithValue("@amountCoin", obj.amountCoin);
+                cmd.Parameters.AddWithValue("@name", obj.name);
+                cmd.Parameters.AddWithValue("@medium", obj.medium);
+                cmd.Parameters.AddWithValue("@isVoucherUsed", obj.isVoucherUsed);
+                cmd.Parameters.AddWithValue("@voucherID", obj.voucherID);
+                cmd.Parameters.AddWithValue("@cardID", obj.cardID);
+                cmd.Parameters.AddWithValue("@description", obj.description);
+                cmd.Parameters.AddWithValue("@type", obj.type);
+                cmd.Parameters.AddWithValue("@invoiceID", obj.invoiceID);
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
                 if (i != 0)

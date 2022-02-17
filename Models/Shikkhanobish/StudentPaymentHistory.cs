@@ -18,6 +18,9 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public string cardID { get; set; }
         public int voucherID { get; set; }
         public string name { get; set; }
+        public string description { get; set; }
+        public string type { get; set; }
+        public string invoiceID { get; set; }
         public string Response { get; set; }
     }
 }
