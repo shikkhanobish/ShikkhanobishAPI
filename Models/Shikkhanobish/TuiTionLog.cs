@@ -24,5 +24,11 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public string img2 { get; set; }
         public string img3 { get; set; }
         public string img4 { get; set; }
+        public int approval { get; set; }
+        public string teacherID { get; set; }
+        public string teacherName { get; set; }
+        public string ansText { get; set; }
+        public string ansImg { get; set; }
+        public string ansVideo { get; set; }
     }
 }
