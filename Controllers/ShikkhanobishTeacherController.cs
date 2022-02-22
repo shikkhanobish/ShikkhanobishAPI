@@ -1920,6 +1920,8 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@startTime", obj.startTime);
                 cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
                 cmd.Parameters.AddWithValue("@taskID", obj.taskID);
+                cmd.Parameters.AddWithValue("@ActiveStatus", "Active");
+                cmd.Parameters.AddWithValue("@TotalSubmitted", 0);
 
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
@@ -1993,6 +1995,8 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.endTime = reader["endTime"].ToString();
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.taskID = reader["taskID"].ToString();
+                    objAdd.ActiveStatus = reader["ActiveStatus"].ToString();
+                    objAdd.TotalSubmitted = Convert.ToInt32(reader["TotalSubmitted"]);
                     objAdd.Response = "OK";
 
                     objRList.Add(objAdd);
@@ -2007,6 +2011,126 @@ namespace SHikkhanobishAPI.Controllers
             }
             return objRList;
 
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response MakeTaskInActive(dataentryOperatorTask obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("MakeTaskInActive", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@taskID", obj.taskID);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response SetSubmitCount(dataentryOperatorTask obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("SetSubmitCount", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@taskID", obj.taskID);
+                cmd.Parameters.AddWithValue("@TotalSubmitted", obj.TotalSubmitted);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response makeTaskActive(dataentryOperatorTask obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("makeTaskActive", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@taskID", obj.taskID);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        public Response increaseSubmitCount(dataentryOperatorTask obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("increaseSubmitCount", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@taskID", obj.taskID);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
         }
         #endregion
 
