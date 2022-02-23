@@ -3562,6 +3562,7 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@ansText", "n/a");
                 cmd.Parameters.AddWithValue("@ansImg", "n/a");
                 cmd.Parameters.AddWithValue("@ansVideo", "n/a");
+                cmd.Parameters.AddWithValue("@startingDate", "n/a");
 
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
@@ -3587,6 +3588,62 @@ forthChoiceName: 'Chapter 1'
 
             return response;
         }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setTuiTionLogWithID(TuiTionLog obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setTuiTionLogWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@tuitionLogID", obj.tuitionLogID);
+                cmd.Parameters.AddWithValue("@studentName", obj.studentName);
+                cmd.Parameters.AddWithValue("@subjectname", obj.subjectname);
+                cmd.Parameters.AddWithValue("@description", obj.description);
+                cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
+                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+                cmd.Parameters.AddWithValue("@date", obj.date);
+                cmd.Parameters.AddWithValue("@tuitionLogStatus", obj.tuitionLogStatus);
+                cmd.Parameters.AddWithValue("@pendingTeacherID", obj.pendingTeacherID);
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@chapterName", obj.chapterName);
+                cmd.Parameters.AddWithValue("@isTextOrVideo", obj.isTextOrVideo);
+                cmd.Parameters.AddWithValue("@img1", obj.img1);
+                cmd.Parameters.AddWithValue("@img2", obj.img2);
+                cmd.Parameters.AddWithValue("@img3", obj.img3);
+                cmd.Parameters.AddWithValue("@img4", obj.img4);
+                cmd.Parameters.AddWithValue("@approval", 0);
+                cmd.Parameters.AddWithValue("@teacherID", 0);
+                cmd.Parameters.AddWithValue("@teacherName", "n/a");
+                cmd.Parameters.AddWithValue("@ansText", "n/a");
+                cmd.Parameters.AddWithValue("@ansImg", "n/a");
+                cmd.Parameters.AddWithValue("@ansVideo", "n/a");
+                cmd.Parameters.AddWithValue("@startingDate", obj.startingDate);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+
+            return response;
+        }
+        
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public TuiTionLog getTuiTionLogWithID(TuiTionLog obj)
         {
@@ -3623,6 +3680,8 @@ forthChoiceName: 'Chapter 1'
                     objAdd.ansText = reader["ansText"].ToString();
                     objAdd.ansImg = reader["ansImg"].ToString();
                     objAdd.ansVideo = reader["ansVideo"].ToString();
+                    objAdd.startingDate = reader["startingDate"].ToString();
+
                     objAdd.Response = "ok";
                 }
                 conn.Close();
@@ -3675,6 +3734,8 @@ forthChoiceName: 'Chapter 1'
                     objAdd.ansText = reader["ansText"].ToString();
                     objAdd.ansImg = reader["ansImg"].ToString();
                     objAdd.ansVideo = reader["ansVideo"].ToString();
+                    objAdd.startingDate = reader["startingDate"].ToString();
+
                     objAdd.Response = "ok";
 
                     objRList.Add(objAdd);
@@ -3726,6 +3787,8 @@ forthChoiceName: 'Chapter 1'
                     objAdd.ansText = reader["ansText"].ToString();
                     objAdd.ansImg = reader["ansImg"].ToString();
                     objAdd.ansVideo = reader["ansVideo"].ToString();
+                    objAdd.startingDate = reader["startingDate"].ToString();
+
                     objAdd.Response = "ok";
 
                     objRList.Add(objAdd);
