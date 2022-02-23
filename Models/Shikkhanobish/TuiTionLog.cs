@@ -30,5 +30,6 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public string ansText { get; set; }
         public string ansImg { get; set; }
         public string ansVideo { get; set; }
+        public string startingDate { get; set; }
     }
 }
