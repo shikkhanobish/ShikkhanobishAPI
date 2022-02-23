@@ -3599,27 +3599,6 @@ forthChoiceName: 'Chapter 1'
                 SqlCommand cmd = new SqlCommand("setTuiTionLogWithID", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@tuitionLogID", obj.tuitionLogID);
-                cmd.Parameters.AddWithValue("@studentName", obj.studentName);
-                cmd.Parameters.AddWithValue("@subjectname", obj.subjectname);
-                cmd.Parameters.AddWithValue("@description", obj.description);
-                cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
-                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
-                cmd.Parameters.AddWithValue("@date", obj.date);
-                cmd.Parameters.AddWithValue("@tuitionLogStatus", obj.tuitionLogStatus);
-                cmd.Parameters.AddWithValue("@pendingTeacherID", obj.pendingTeacherID);
-                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
-                cmd.Parameters.AddWithValue("@chapterName", obj.chapterName);
-                cmd.Parameters.AddWithValue("@isTextOrVideo", obj.isTextOrVideo);
-                cmd.Parameters.AddWithValue("@img1", obj.img1);
-                cmd.Parameters.AddWithValue("@img2", obj.img2);
-                cmd.Parameters.AddWithValue("@img3", obj.img3);
-                cmd.Parameters.AddWithValue("@img4", obj.img4);
-                cmd.Parameters.AddWithValue("@approval", 0);
-                cmd.Parameters.AddWithValue("@teacherID", 0);
-                cmd.Parameters.AddWithValue("@teacherName", "n/a");
-                cmd.Parameters.AddWithValue("@ansText", "n/a");
-                cmd.Parameters.AddWithValue("@ansImg", "n/a");
-                cmd.Parameters.AddWithValue("@ansVideo", "n/a");
                 cmd.Parameters.AddWithValue("@startingDate", obj.startingDate);
 
                 conn.Open();
