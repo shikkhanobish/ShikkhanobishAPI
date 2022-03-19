@@ -11,6 +11,7 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public int studentID { get; set; }
         public int amount { get; set; }
         public int type { get; set; }
+        public string invoiceID { get; set; }
         public string phonenumber { get; set; }
     }
 }

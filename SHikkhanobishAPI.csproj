@@ -313,6 +313,7 @@
     <Compile Include="Models\Shikkhanobish\StudentEvaluation.cs" />
     <Compile Include="Models\Shikkhanobish\StudentMCQAns.cs" />
     <Compile Include="Models\Shikkhanobish\StudentReport.cs" />
+    <Compile Include="Models\Shikkhanobish\studentSubjectPurchase.cs" />
     <Compile Include="Models\Shikkhanobish\Tag.cs" />
     <Compile Include="Models\Shikkhanobish\TagStudentConnector.cs" />
     <Compile Include="Models\Shikkhanobish\TeacherActivityStatus.cs" />

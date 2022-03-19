@@ -454,6 +454,7 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@topicID", obj.topicID);
                 cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
                 cmd.Parameters.AddWithValue("@name", obj.name);
+                cmd.Parameters.AddWithValue("@topicIndex", obj.topicIndex);
                 cmd.Parameters.AddWithValue("@description", obj.description);
 
                 conn.Open();
@@ -490,6 +491,7 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@topicID", obj.topicID);
                 cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
                 cmd.Parameters.AddWithValue("@name", obj.name);
+                cmd.Parameters.AddWithValue("@topicIndex", obj.topicIndex);
                 cmd.Parameters.AddWithValue("@description", obj.description);
 
                 conn.Open();
@@ -529,6 +531,7 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.topicID = Convert.ToInt32(reader["topicID"]);
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.name = reader["name"].ToString();
+                    objAdd.topicIndex = Convert.ToInt32(reader["topicIndex"]);
                     objAdd.description = reader["description"].ToString();
 
                     objRList.Add(objAdd);
@@ -561,6 +564,7 @@ namespace SHikkhanobishAPI.Controllers
                     objR.topicID = Convert.ToInt32(reader["topicID"]);
                     objR.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objR.name = reader["name"].ToString();
+                    objR.topicIndex = Convert.ToInt32(reader["topicIndex"]);
                     objR.description = reader["description"].ToString();
 
                 }
@@ -2669,6 +2673,7 @@ forthChoiceName: 'Chapter 1'
         #region RequestPayemnt
         private string paymentGatewayBase = WebConfigurationManager.AppSettings["baseUrl"];
         string Baseurl = WebConfigurationManager.AppSettings["baseUrl"] + "/request.php";
+        string productionURl = WebConfigurationManager.AppSettings["productionUrl"] + "/request.php";
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public async Task<String> RequestPayment(requestPayment obj)
         {
@@ -2682,8 +2687,8 @@ forthChoiceName: 'Chapter 1'
             rq.amount = obj.amount +"" ;
             rq.cus_phone = obj.phonenumber;
             rq.opt_a = obj.studentID.ToString();
-            rq.opt_b = obj.type.ToString();
-            rq.cus_email = "mahirmuzahid@gmail.com";
+            rq.opt_b = obj.invoiceID;
+            rq.cus_email = "";
 
             rq.success_url = "https://api.shikkhanobish.com/api/ShikkhanobishLogin/CallBackPaymentSuccessFull";
             rq.fail_url = "https://api.shikkhanobish.com/api/ShikkhanobishLogin/CallBackPaymentFailed";
@@ -3147,6 +3152,10 @@ forthChoiceName: 'Chapter 1'
                     objAdd.option2 = reader["option2"].ToString();
                     objAdd.option3 = reader["option3"].ToString();
                     objAdd.option4 = reader["option4"].ToString();
+                    objAdd.opOneImg = reader["opOneImg"].ToString();
+                    objAdd.opTwoImg = reader["opTwoImg"].ToString();
+                    objAdd.opThreeImg = reader["opThreeImg"].ToString();
+                    objAdd.opFourImg = reader["opFourImg"].ToString();
                     objAdd.rightAnswer = Convert.ToInt32(reader["rightAnswer"]);
                     objAdd.quesImages = reader["quesImages"].ToString();
                     objAdd.review = Convert.ToInt32(reader["review"]);
@@ -3204,6 +3213,10 @@ forthChoiceName: 'Chapter 1'
                     objR.option2 = reader["option2"].ToString();
                     objR.option3 = reader["option3"].ToString();
                     objR.option4 = reader["option4"].ToString();
+                    objR.opOneImg = reader["opOneImg"].ToString();
+                    objR.opTwoImg = reader["opTwoImg"].ToString();
+                    objR.opThreeImg = reader["opThreeImg"].ToString();
+                    objR.opFourImg = reader["opFourImg"].ToString();
                     objR.rightAnswer = Convert.ToInt32(reader["rightAnswer"]);
                     objR.quesImages = reader["quesImages"].ToString();
                     objR.review = Convert.ToInt32(reader["review"]);
@@ -3254,8 +3267,12 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@option2", obj.option2);
                 cmd.Parameters.AddWithValue("@option3", obj.option3);
                 cmd.Parameters.AddWithValue("@option4", obj.option4);
+                cmd.Parameters.AddWithValue("@opOneImg", obj.opOneImg);
+                cmd.Parameters.AddWithValue("@opTwoImg", obj.opTwoImg);
+                cmd.Parameters.AddWithValue("@opThreeImg", obj.opThreeImg);
+                cmd.Parameters.AddWithValue("@opFourImg", obj.opFourImg);
                 cmd.Parameters.AddWithValue("@rightAnswer", obj.rightAnswer);
-                cmd.Parameters.AddWithValue("@quesImages", "n/a");
+                cmd.Parameters.AddWithValue("@quesImages", obj.quesImages);
                 cmd.Parameters.AddWithValue("@review", obj.review);
 
                 conn.Open();
@@ -3312,6 +3329,10 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@option2", obj.option2);
                 cmd.Parameters.AddWithValue("@option3", obj.option3);
                 cmd.Parameters.AddWithValue("@option4", obj.option4);
+                cmd.Parameters.AddWithValue("@opOneImg", obj.opOneImg);
+                cmd.Parameters.AddWithValue("@opTwoImg", obj.opTwoImg);
+                cmd.Parameters.AddWithValue("@opThreeImg", obj.opThreeImg);
+                cmd.Parameters.AddWithValue("@opFourImg", obj.opFourImg);
                 cmd.Parameters.AddWithValue("@rightAnswer", obj.rightAnswer);
                 cmd.Parameters.AddWithValue("@quesImages", obj.quesImages);
                 cmd.Parameters.AddWithValue("@review", obj.review);
@@ -3552,6 +3573,7 @@ forthChoiceName: 'Chapter 1'
                 cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
                 cmd.Parameters.AddWithValue("@chapterName", obj.chapterName);
                 cmd.Parameters.AddWithValue("@isTextOrVideo", obj.isTextOrVideo);
+                cmd.Parameters.AddWithValue("@startingDate", obj.startingDate);
                 cmd.Parameters.AddWithValue("@img1", obj.img1);
                 cmd.Parameters.AddWithValue("@img2", obj.img2);
                 cmd.Parameters.AddWithValue("@img3", obj.img3);
@@ -6918,6 +6940,135 @@ forthChoiceName: 'Chapter 1'
 
         #endregion
 
+        #region studentSubjectPurchase
+ //       alter procedure setstudentSubjectPurchase
+ //    @studentID int, 
+ //       @subjectID int, 
+ //       @chapterID int,
+ //       @topicID int, 
+ //       @date nvarchar(50),
+	//@isTuitionComplete int
+ //       as begin
+ //       insert into Shikkhanobish.studentSubjectPurchasee(studentID, subjectID, chapterID, topicID, date, isTuitionComplete)
+ //        values(@studentID, @subjectID, @chapterID, @topicID, @date, @isTuitionComplete)
+ //       end
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
 
+        public Response setQuestionPdfLink(studentSubjectPurchase obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setQuestionPdfLink", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+                cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@topicID", obj.topicID);
+                cmd.Parameters.AddWithValue("@date", obj.date);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+//create procedure getstudentSubjectPurchaseWithSt
+//@studentID int  
+// as begin
+// select* from Shikkhanobish.studentSubjectPurchasee where studentID =  @studentID
+//end
+
+
+       [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<studentSubjectPurchase> getstudentSubjectPurchaseWithSt(studentSubjectPurchase obj)
+        {
+            List<studentSubjectPurchase> objRList = new List<studentSubjectPurchase>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getstudentSubjectPurchaseWithSt", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@studentID", obj.studentID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    studentSubjectPurchase objAdd = new studentSubjectPurchase();
+                    objAdd.studentID = Convert.ToInt32(reader["studentID"]);
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.subjectID = Convert.ToInt32(reader["subjectID"]);
+                    objAdd.topicID= Convert.ToInt32(reader["topicID"]);
+                    objAdd.date = reader["date"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                studentSubjectPurchase objAdd = new studentSubjectPurchase();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+        //        create procedure getstudentSubjectPurchase
+        //    @studentID int
+
+        // as begin
+
+
+        // select* from Shikkhanobish.studentSubjectPurchasee
+
+        //end
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<studentSubjectPurchase> getstudentSubjectPurchase(studentSubjectPurchase obj)
+        {
+            List<studentSubjectPurchase> objRList = new List<studentSubjectPurchase>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getstudentSubjectPurchase", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    studentSubjectPurchase objAdd = new studentSubjectPurchase();
+                    objAdd.studentID = Convert.ToInt32(reader["studentID"]);
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.subjectID = Convert.ToInt32(reader["subjectID"]);
+                    objAdd.topicID = Convert.ToInt32(reader["topicID"]);
+                    objAdd.date = reader["date"].ToString();
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                studentSubjectPurchase objAdd = new studentSubjectPurchase();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+        #endregion
     }
 }

@@ -17,6 +17,10 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public string option2 { get; set; }
         public string option3 { get; set; }
         public string option4 { get; set; }
+        public string opOneImg { get; set; }
+        public string opTwoImg { get; set; }
+        public string opThreeImg { get; set; }
+        public string opFourImg { get; set; }
         public int rightAnswer { get; set; }
         public string quesImages { get; set; }
         public int review { get; set; }
