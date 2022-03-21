@@ -6941,31 +6941,28 @@ forthChoiceName: 'Chapter 1'
         #endregion
 
         #region studentSubjectPurchase
- //       alter procedure setstudentSubjectPurchase
- //    @studentID int, 
- //       @subjectID int, 
- //       @chapterID int,
- //       @topicID int, 
- //       @date nvarchar(50),
-	//@isTuitionComplete int
- //       as begin
- //       insert into Shikkhanobish.studentSubjectPurchasee(studentID, subjectID, chapterID, topicID, date, isTuitionComplete)
- //        values(@studentID, @subjectID, @chapterID, @topicID, @date, @isTuitionComplete)
- //       end
+     //   alter procedure setstudentSubjectPurchase
+     //@studentID int, 
+     //      @subjectID int, 
+     //      @chapterID int,
+     //      @date nvarchar(50)
+     //      as begin
+     //      insert into Shikkhanobish.studentSubjectPurchasee(studentID, subjectID, chapterID, date)
+     //       values(@studentID, @subjectID, @chapterID, @date)
+     //      end
         [System.Web.Http.AcceptVerbs("GET", "POST")]
 
-        public Response setQuestionPdfLink(studentSubjectPurchase obj)
+        public Response setstudentSubjectPurchase(studentSubjectPurchase obj)
         {
             Response response = new Response();
             try
             {
                 Connection();
-                SqlCommand cmd = new SqlCommand("setQuestionPdfLink", conn);
+                SqlCommand cmd = new SqlCommand("setstudentSubjectPurchase", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@studentID", obj.studentID);
                 cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
                 cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
-                cmd.Parameters.AddWithValue("@topicID", obj.topicID);
                 cmd.Parameters.AddWithValue("@date", obj.date);
 
                 conn.Open();
@@ -6988,8 +6985,8 @@ forthChoiceName: 'Chapter 1'
             }
             return response;
         }
-//create procedure getstudentSubjectPurchaseWithSt
-//@studentID int  
+//        create procedure getstudentSubjectPurchaseWithSt
+//        @studentID int  
 // as begin
 // select* from Shikkhanobish.studentSubjectPurchasee where studentID =  @studentID
 //end
@@ -7013,7 +7010,6 @@ forthChoiceName: 'Chapter 1'
                     objAdd.studentID = Convert.ToInt32(reader["studentID"]);
                     objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
                     objAdd.subjectID = Convert.ToInt32(reader["subjectID"]);
-                    objAdd.topicID= Convert.ToInt32(reader["topicID"]);
                     objAdd.date = reader["date"].ToString();
 
                     objRList.Add(objAdd);
