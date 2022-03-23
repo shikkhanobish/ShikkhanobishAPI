@@ -1485,6 +1485,7 @@ namespace SHikkhanobishAPI.Controllers
                 {
                     StudentTuitionHistory objAdd = new StudentTuitionHistory();
                     objAdd.studentID = Convert.ToInt32(reader["studentID"]);
+                    objAdd.studentName = reader["studentName"].ToString();
                     objAdd.tuitionID = reader["tuitionID"].ToString();
                     objAdd.time = reader["time"].ToString();
                     objAdd.teacherID = Convert.ToInt32(reader["teacherID"]);
@@ -1495,8 +1496,14 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.secondChoiceID = reader["secondChoiceID"].ToString();
                     objAdd.thirdChoiceID = reader["thirdChoiceID"].ToString();
                     objAdd.forthChoiceID = reader["forthChoiceID"].ToString();
+                    objAdd.firstChoiceName = reader["firstChoiceName"].ToString();
+                    objAdd.secondChoiceName = reader["secondChoiceName"].ToString();
+                    objAdd.thirdChoiceName = reader["thirdChoiceName"].ToString();
+                    objAdd.forthChoiceName = reader["forthChoiceName"].ToString();
                     objAdd.topicID = Convert.ToInt32(reader["topicID"]);
+                    objAdd.teacherEarn = Convert.ToInt32(reader["teacherEarn"]);
                     objAdd.isTextOrVideo = Convert.ToInt32(reader["isTextOrVideo"]);
+                    objAdd.topicID = Convert.ToInt32(reader["topicID"]);
                     objAdd.topicName = reader["topicName"].ToString();
                     objAdd.videoURL = reader["videoURL"].ToString();
                     objAdd.approval = Convert.ToInt32(reader["approval"]);
@@ -1609,6 +1616,36 @@ namespace SHikkhanobishAPI.Controllers
             }
             return objR;
         }
+//        alter procedure setStudentTuitionHistory
+// @studentID int, 
+// @time nvarchar(50), 
+// @teacherID int,
+// @cost int, 
+// @firstChoiceID nvarchar(50), 
+// @secondChoiceID nvarchar(50), 
+// @thirdChoiceID nvarchar(50), 
+// @forthChoiceID nvarchar(50), 
+// @date nvarchar(50), 
+// @teacherName nvarchar(50), 
+// @studentName nvarchar(50), 
+// @firstChoiceName nvarchar(50), 
+// @secondChoiceName nvarchar(50), 
+// @thirdChoiceName nvarchar(50), 
+// @forthChoiceName nvarchar(50), 
+// @ratting float, 
+// @teacherEarn float, 
+// @tuitionID nvarchar(150), 
+// @topicID int, 
+// @isTextOrVideo int, 
+// @videoURL nvarchar(100), 
+// @topicName nvarchar(200), 
+// @approval int
+
+//as begin
+//insert into Shikkhanobish.StudentTuitionHistory(studentID, time, teacherID, cost    , firstChoiceID, secondChoiceID, thirdChoiceID   , forthChoiceID  , date, teacherName, studentName, firstChoiceName, secondChoiceName, thirdChoiceName, forthChoiceName, ratting, teacherEarn, tuitionID, topicID, isTextOrVideo, videoURL, topicName, approval)
+//values(@studentID, @time, @teacherID, @cost   , @firstChoiceID, @secondChoiceID, @thirdChoiceID  , @forthChoiceID , @date, @teacherName, @studentName, @firstChoiceName, @secondChoiceName, @thirdChoiceName, @forthChoiceName, @ratting, @teacherEarn, @tuitionID, @topicID, @isTextOrVideo, @videoURL, @topicName, @approval)
+
+//end
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Response setStudentTuitionHistory(StudentTuitionHistory obj)
         {
@@ -1620,7 +1657,7 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@studentID", obj.studentID);
                 cmd.Parameters.AddWithValue("@tuitionID", obj.tuitionID);
-                cmd.Parameters.AddWithValue("@time", obj.time);
+                cmd.Parameters.AddWithValue("@time", "N/A");
                 cmd.Parameters.AddWithValue("@teacherID", obj.teacherID);
                 cmd.Parameters.AddWithValue("@cost", obj.cost);
                 cmd.Parameters.AddWithValue("@ratting", obj.ratting);
