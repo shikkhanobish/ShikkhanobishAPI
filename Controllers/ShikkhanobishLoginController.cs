@@ -7103,5 +7103,160 @@ forthChoiceName: 'Chapter 1'
             return objRList;
         }
         #endregion
+
+        #region  CreativeQuestion
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<CreativeQuestion> getCreativeQuestion()
+        {
+            List<CreativeQuestion> objRList = new List<CreativeQuestion>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getCreativeQuestion", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    CreativeQuestion objAdd = new CreativeQuestion();
+                    objAdd.cQuestionID = reader["cQuestionID"].ToString();
+                    objAdd.classID = Convert.ToInt32(reader["classID"]);
+                    objAdd.subjectID = Convert.ToInt32(reader["subjectID"]);
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.topicID = Convert.ToInt32(reader["topicID"]);
+                    objAdd.mainQuestion = reader["mainQuestion"].ToString();
+                    objAdd.firstQuestion = reader["firstQuestion"].ToString();
+                    objAdd.secondQuestion = reader["secondQuestion"].ToString();
+                    objAdd.thirdQuestion = reader["thirdQuestion"].ToString();
+                    objAdd.forthQuestion = reader["forthQuestion"].ToString();
+                    objAdd.firstqsImg = reader["firstqsImg"].ToString();
+                    objAdd.secodqsImg = reader["secodqsImg"].ToString();
+                    objAdd.thirdqsImg = reader["thirdqsImg"].ToString();
+                    objAdd.forthqsImg = reader["forthqsImg"].ToString();
+                    objAdd.firstqsAns = reader["firstqsAns"].ToString();
+                    objAdd.secondqsAns = reader["secondqsAns"].ToString();
+                    objAdd.thirqsAns = reader["thirqsAns"].ToString();
+                    objAdd.forthqsAns = reader["forthqsAns"].ToString();
+                    objAdd.firstqsAnsImg = reader["firstqsAnsImg"].ToString();
+                    objAdd.secondqsAnsImg = reader["secondqsAnsImg"].ToString();
+                    objAdd.thirqsAnsImg = reader["thirqsAnsImg"].ToString();
+                    objAdd.forthqsAnsImg = reader["forthqsAnsImg"].ToString();
+                    objAdd.review = Convert.ToInt32(reader["review"]);
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                CreativeQuestion objAdd = new CreativeQuestion();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public CreativeQuestion getCreativeQuestion(CreativeQuestion obj)
+        {
+            CreativeQuestion objAdd = new CreativeQuestion();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getCreativeQuestionWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@cQuestionID 2 50", obj.cQuestionID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    objAdd.cQuestionID = reader["cQuestionID"].ToString();
+                    objAdd.classID = Convert.ToInt32(reader["classID"]);
+                    objAdd.subjectID = Convert.ToInt32(reader["subjectID"]);
+                    objAdd.chapterID = Convert.ToInt32(reader["chapterID"]);
+                    objAdd.topicID = Convert.ToInt32(reader["topicID"]);
+                    objAdd.mainQuestion = reader["mainQuestion"].ToString();
+                    objAdd.firstQuestion = reader["firstQuestion"].ToString();
+                    objAdd.secondQuestion = reader["secondQuestion"].ToString();
+                    objAdd.thirdQuestion = reader["thirdQuestion"].ToString();
+                    objAdd.forthQuestion = reader["forthQuestion"].ToString();
+                    objAdd.firstqsImg = reader["firstqsImg"].ToString();
+                    objAdd.secodqsImg = reader["secodqsImg"].ToString();
+                    objAdd.thirdqsImg = reader["thirdqsImg"].ToString();
+                    objAdd.forthqsImg = reader["forthqsImg"].ToString();
+                    objAdd.firstqsAns = reader["firstqsAns"].ToString();
+                    objAdd.secondqsAns = reader["secondqsAns"].ToString();
+                    objAdd.thirqsAns = reader["thirqsAns"].ToString();
+                    objAdd.forthqsAns = reader["forthqsAns"].ToString();
+                    objAdd.firstqsAnsImg = reader["firstqsAnsImg"].ToString();
+                    objAdd.secondqsAnsImg = reader["secondqsAnsImg"].ToString();
+                    objAdd.thirqsAnsImg = reader["thirqsAnsImg"].ToString();
+                    objAdd.forthqsAnsImg = reader["forthqsAnsImg"].ToString();
+                    objAdd.review = Convert.ToInt32(reader["review"]);
+
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+
+                objAdd.Response = ex.Message;
+            }
+            return objAdd;
+        }
+
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+
+        public Response setCreativeQuestion(CreativeQuestion obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setCreativeQuestion", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@cQuestionID", obj.cQuestionID);
+                cmd.Parameters.AddWithValue("@classID", obj.classID);
+                cmd.Parameters.AddWithValue("@subjectID", obj.subjectID);
+                cmd.Parameters.AddWithValue("@chapterID", obj.chapterID);
+                cmd.Parameters.AddWithValue("@topicID", obj.topicID);
+                cmd.Parameters.AddWithValue("@mainQuestion", obj.mainQuestion);
+                cmd.Parameters.AddWithValue("@firstQuestion", obj.firstQuestion);
+                cmd.Parameters.AddWithValue("@secondQuestion", obj.secondQuestion);
+                cmd.Parameters.AddWithValue("@thirdQuestion", obj.thirdQuestion);
+                cmd.Parameters.AddWithValue("@forthQuestion", obj.forthQuestion);
+                cmd.Parameters.AddWithValue("@firstqsAns", obj.firstqsAns);
+                cmd.Parameters.AddWithValue("@secondqsAns", obj.secondqsAns);
+                cmd.Parameters.AddWithValue("@thirqsAns", obj.thirqsAns);
+                cmd.Parameters.AddWithValue("@forthqsAns", obj.forthqsAns);
+                cmd.Parameters.AddWithValue("@firstqsImg", obj.firstqsImg);
+                cmd.Parameters.AddWithValue("@secodqsImg", obj.secodqsImg);
+                cmd.Parameters.AddWithValue("@thirdqsImg", obj.thirdqsImg);
+                cmd.Parameters.AddWithValue("@forthqsImg", obj.forthqsImg);
+                cmd.Parameters.AddWithValue("@firstqsAnsImg", obj.firstqsAnsImg);
+                cmd.Parameters.AddWithValue("@secondqsAnsImg", obj.secondqsAnsImg);
+                cmd.Parameters.AddWithValue("@thirqsAnsImg", obj.thirqsAnsImg);
+                cmd.Parameters.AddWithValue("@forthqsAnsImg", obj.forthqsAnsImg);
+                cmd.Parameters.AddWithValue("@review", obj.review);
+
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        #endregion
     }
 }

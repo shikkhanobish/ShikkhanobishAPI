@@ -16,6 +16,7 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         public int TotalSubmitted { get; set; }
         public string endTime { get; set; }
         public string date { get; set; }
+        public int taskType { get; set; }
         public string Response { get; set; }
 
     }

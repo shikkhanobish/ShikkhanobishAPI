@@ -1904,6 +1904,22 @@ namespace SHikkhanobishAPI.Controllers
         #endregion
 
         #region Data entry operator
+ //       alter procedure setdataentryOperatorTask
+ //@userID    int, 
+ //@MCQNumbers nvarchar(1000), 
+ //@chapterID int, 
+ //@taskID nvarchar(100), 
+ //@startTime nvarchar(50), 
+ //@endTime nvarchar(50), 
+ //@date nvarchar(100), 
+ //@ActiveStatus nvarchar(50),
+ //@TotalSubmitted int, 
+ //@taskType int
+ 
+ //as begin
+ //insert into Shikkhanobish.dataentryOperatorTask(userID, MCQNumbers  , chapterID, taskID  , startTime, endTime , date, ActiveStatus, TotalSubmitted, taskType)
+ //values(@userID, @MCQNumbers , @chapterID, @taskID , @startTime, @endTime    , @date, @ActiveStatus, @TotalSubmitted, @taskType)
+ //end
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public Response setdataentryOperatorTask(dataentryOperatorTask obj)
         {
@@ -1922,6 +1938,7 @@ namespace SHikkhanobishAPI.Controllers
                 cmd.Parameters.AddWithValue("@taskID", obj.taskID);
                 cmd.Parameters.AddWithValue("@ActiveStatus", "Active");
                 cmd.Parameters.AddWithValue("@TotalSubmitted", 0);
+                cmd.Parameters.AddWithValue("@taskType", obj.taskType);
 
                 conn.Open();
                 int i = cmd.ExecuteNonQuery();
@@ -1997,6 +2014,7 @@ namespace SHikkhanobishAPI.Controllers
                     objAdd.taskID = reader["taskID"].ToString();
                     objAdd.ActiveStatus = reader["ActiveStatus"].ToString();
                     objAdd.TotalSubmitted = Convert.ToInt32(reader["TotalSubmitted"]);
+                    objAdd.taskType = Convert.ToInt32(reader["taskType"]);
                     objAdd.Response = "OK";
 
                     objRList.Add(objAdd);
