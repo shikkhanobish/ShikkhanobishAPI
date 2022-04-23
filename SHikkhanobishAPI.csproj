@@ -282,6 +282,7 @@
     </Compile>
     <Compile Include="Models\ApiMaker\ApiMaker.cs" />
     <Compile Include="Models\ApiMaker\TestForCodePreview.cs" />
+    <Compile Include="Models\facebookggg.cs" />
     <Compile Include="Models\Medhabi\MatchHistory.cs" />
     <Compile Include="Models\Medhabi\MatchMaking.cs" />
     <Compile Include="Models\Medhabi\medhabiStudent.cs" />
@@ -300,6 +301,7 @@
     <Compile Include="Models\Shikkhanobish\dataentryOperatorTask.cs" />
     <Compile Include="Models\Shikkhanobish\Notification.cs" />
     <Compile Include="Models\Shikkhanobish\NotificationType.cs" />
+    <Compile Include="Models\Shikkhanobish\OperatorEntryCount.cs" />
     <Compile Include="Models\Shikkhanobish\pendingRatting.cs" />
     <Compile Include="Models\Shikkhanobish\Post.cs" />
     <Compile Include="Models\Shikkhanobish\PromotionalImage.cs" />
@@ -327,6 +329,7 @@
     <Compile Include="Models\Shikkhanobish\TuitionRequestCount.cs" />
     <Compile Include="Models\Shikkhanobish\UpdateTeacher.cs" />
     <Compile Include="Models\Shikkhanobish\UserTimelineTag.cs" />
+    <Compile Include="Models\teacherSubmitHistory.cs" />
     <Compile Include="Models\TransactionModel.cs" />
     <Compile Include="Models\Response.cs" />
     <Compile Include="Models\Shikkhanobish\ChangeTeacherInfo.cs" />

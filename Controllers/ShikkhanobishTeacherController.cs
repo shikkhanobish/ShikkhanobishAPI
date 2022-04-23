@@ -2151,6 +2151,102 @@ namespace SHikkhanobishAPI.Controllers
             return response;
         }
         #endregion
+        #region Teacher Submit History
+        public Response setteacherSubmitHistory(teacherSubmitHistory obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setteacherSubmitHistory", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@teacherSubmitHistoryID", obj.teacherSubmitHistoryID);
+                cmd.Parameters.AddWithValue("@operatorID", obj.operatorID);
+                cmd.Parameters.AddWithValue("@questionID", obj.questionID);
+                cmd.Parameters.AddWithValue("@date", obj.date);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<teacherSubmitHistory> getTeacherSubmitHistory()
+        {
+            List<teacherSubmitHistory> objRList = new List<teacherSubmitHistory>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getTeacherSubmitHistory", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    teacherSubmitHistory objAdd = new teacherSubmitHistory();
+                    objAdd.teacherSubmitHistoryID = reader["teacherSubmitHistoryID"].ToString();
+                    objAdd.questionID = reader["questionID"].ToString(); 
+                    objAdd.operatorID = reader["operatorID"].ToString();
+                    objAdd.date = reader["date"].ToString();
+                    objAdd.Response = "OK";
 
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                teacherSubmitHistory objAdd = new teacherSubmitHistory();
+                var Response = ex.InnerException;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+
+        }
+        #endregion
+        public Response setfacebookggg(facebookggg obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setfacebookggg", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@mail", obj.mail);
+                cmd.Parameters.AddWithValue("@password", obj.password);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+            return response;
+        }
     }
 }

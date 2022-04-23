@@ -7155,7 +7155,7 @@ forthChoiceName: 'Chapter 1'
             return objRList;
         }
         [System.Web.Http.AcceptVerbs("GET", "POST")]
-        public CreativeQuestion getCreativeQuestion(CreativeQuestion obj)
+        public CreativeQuestion getCreativeQuestionWithID(CreativeQuestion obj)
         {
             CreativeQuestion objAdd = new CreativeQuestion();
             try
@@ -7163,7 +7163,7 @@ forthChoiceName: 'Chapter 1'
                 Connection();
                 SqlCommand cmd = new SqlCommand("getCreativeQuestionWithID", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@cQuestionID 2 50", obj.cQuestionID);
+                cmd.Parameters.AddWithValue("@cQuestionID", obj.cQuestionID);
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -7258,5 +7258,116 @@ forthChoiceName: 'Chapter 1'
             return response;
         }
         #endregion
+        #region OperatorSubmitCount
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public async Task<Response> setOperatorEntryCount(OperatorEntryCount obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setOperatorEntryCount", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@operatorID", obj.operatorID);
+                cmd.Parameters.AddWithValue("@UploadCount", obj.UploadCount);
+                cmd.Parameters.AddWithValue("@ApprovedCount", obj.ApprovedCount);
+                cmd.Parameters.AddWithValue("@DeclineCount", obj.DeclineCount);
+                cmd.Parameters.AddWithValue("@PendingCount", obj.PendingCount);
+                cmd.Parameters.AddWithValue("@Type", obj.Type);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+
+
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public Response setOperatorEntryCountWithID(OperatorEntryCount obj)
+        {
+            Response response = new Response();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("setOperatorEntryCountWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@operatorID", obj.operatorID);
+                cmd.Parameters.AddWithValue("@UploadCount", obj.UploadCount);
+                cmd.Parameters.AddWithValue("@ApprovedCount", obj.ApprovedCount);
+                cmd.Parameters.AddWithValue("@DeclineCount", obj.DeclineCount);
+                cmd.Parameters.AddWithValue("@PendingCount", obj.PendingCount);
+                cmd.Parameters.AddWithValue("@Type", obj.Type);
+                conn.Open();
+                int i = cmd.ExecuteNonQuery();
+                if (i != 0)
+                {
+                    response.Massage = "Succesfull!";
+                    response.Status = 0;
+                }
+                else
+                {
+                    response.Massage = "Unsuccesfull!";
+                    response.Status = 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Massage = ex.Message;
+                response.Status = 0;
+            }
+
+
+            return response;
+        }
+        [System.Web.Http.AcceptVerbs("GET", "POST")]
+        public List<OperatorEntryCount> getOperatorEntryCountWithID(OperatorEntryCount obj)
+        {
+            List<OperatorEntryCount> objRList = new List<OperatorEntryCount>();
+            try
+            {
+                Connection();
+                SqlCommand cmd = new SqlCommand("getOperatorEntryCountWithID", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@operatorID", obj.operatorID);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    OperatorEntryCount objAdd = new OperatorEntryCount();
+                    objAdd.operatorID = Convert.ToInt32(reader["employeeType"]);
+                    objAdd.UploadCount = Convert.ToInt32(reader["employeeType"]);
+                    objAdd.ApprovedCount = Convert.ToInt32(reader["employeeType"]);
+                    objAdd.DeclineCount = Convert.ToInt32(reader["employeeType"]);
+                    objAdd.Type = Convert.ToInt32(reader["employeeType"]);
+                    objAdd.Response = "ok";
+
+                    objRList.Add(objAdd);
+                }
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                OperatorEntryCount objAdd = new OperatorEntryCount();
+                objAdd.Response = ex.Message;
+                objRList.Add(objAdd);
+            }
+            return objRList;
+        }
+        #endregion
+
     }
 }
