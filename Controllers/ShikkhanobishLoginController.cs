@@ -7258,6 +7258,7 @@ forthChoiceName: 'Chapter 1'
             return response;
         }
         #endregion
+
         #region OperatorSubmitCount
         [System.Web.Http.AcceptVerbs("GET", "POST")]
         public async Task<Response> setOperatorEntryCount(OperatorEntryCount obj)
@@ -7348,11 +7349,12 @@ forthChoiceName: 'Chapter 1'
                 while (reader.Read())
                 {
                     OperatorEntryCount objAdd = new OperatorEntryCount();
-                    objAdd.operatorID = Convert.ToInt32(reader["employeeType"]);
-                    objAdd.UploadCount = Convert.ToInt32(reader["employeeType"]);
-                    objAdd.ApprovedCount = Convert.ToInt32(reader["employeeType"]);
-                    objAdd.DeclineCount = Convert.ToInt32(reader["employeeType"]);
-                    objAdd.Type = Convert.ToInt32(reader["employeeType"]);
+                    objAdd.operatorID = Convert.ToInt32(reader["operatorID"]);
+                    objAdd.UploadCount = Convert.ToInt32(reader["UploadCount"]);
+                    objAdd.ApprovedCount = Convert.ToInt32(reader["ApprovedCount"]);
+                    objAdd.DeclineCount = Convert.ToInt32(reader["DeclineCount"]);
+                    objAdd.PendingCount = Convert.ToInt32(reader["PendingCount"]);
+                    objAdd.Type = Convert.ToInt32(reader["Type"]);
                     objAdd.Response = "ok";
 
                     objRList.Add(objAdd);

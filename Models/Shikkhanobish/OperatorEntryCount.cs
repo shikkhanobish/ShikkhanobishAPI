@@ -28,18 +28,18 @@ namespace SHikkhanobishAPI.Models.Shikkhanobish
         //end
 
 
-        //create procedure setOperatorEntryCountWithID
-        //@operatorID int,
-        //@UploadCount int,
-        //@ApprovedCount int,
-        //@DeclineCount int,
-        //@PendingCount int,
-        //@Type int
-        //as begin
-        //Update OperatorEntryCount
-        //set UploadCount = @UploadCount, ApprovedCount = @ApprovedCount , DeclineCount = @DeclineCount , PendingCount = @PendingCount
-        //, Type = @Type where operatorID = @operatorID
-        //end
+  //      alter procedure setOperatorEntryCountWithID
+  //@operatorID int,
+  //      @UploadCount int,
+  //      @ApprovedCount int,
+  //      @DeclineCount int,
+  //      @PendingCount int,
+  //      @Type int
+  //      as begin
+  //      Update OperatorEntryCount
+  //      set UploadCount = @UploadCount, ApprovedCount = @ApprovedCount , DeclineCount = @DeclineCount , PendingCount = @PendingCount
+  //       where operatorID = @operatorID and Type = @Type
+  //      end
 
 
         //create procedure getOperatorEntryCountWithID
