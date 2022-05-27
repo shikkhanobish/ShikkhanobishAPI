@@ -48,7 +48,7 @@ namespace SHikkhanobishAPI.Controllers
                 toalRating = totalSum / (fs + fos + th + to + on);
             }
            
-
+//sadasdas
             return toalRating;
         }
         #region Send Msg
